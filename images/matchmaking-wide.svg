@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+  <defs><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="#ced9cb" stroke-width=".7"/></pattern><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#698a74"/></marker></defs>
+  <rect width="1200" height="560" fill="#e4ebdf"/><rect x="28" y="28" width="1144" height="504" fill="url(#grid)"/>
+  <g font-family="Arial, 'Yu Gothic', Meiryo, sans-serif">
+    <text x="66" y="77" font-size="13" font-weight="700" letter-spacing="3" fill="#42624d">PROJECT 01 / CONCEPT</text><text x="66" y="123" fill="#244532" font-size="29" font-weight="700" letter-spacing="2">MATCHMAKING SERVICE</text>
+    <text x="1130" y="99" font-size="26" fill="#67816b" text-anchor="end">1 vs 1</text>
+    <path d="M305 260H388V296H465M305 390H388V337H465M735 316H855" fill="none" stroke="#698a74" stroke-width="3" marker-end="url(#arrow)"/>
+    <g fill="#f7f8f2" stroke="#a5b9a3" stroke-width="2"><rect x="80" y="213" width="225" height="94" rx="4"/><rect x="80" y="343" width="225" height="94" rx="4"/><rect x="856" y="234" width="264" height="164" rx="4"/></g>
+    <circle cx="121" cy="260" r="14" fill="#648971"/><circle cx="121" cy="390" r="14" fill="#b67b4d"/><g font-size="20" font-weight="700" fill="#2e533b"><text x="150" y="267">PLAYER A</text><text x="150" y="397">PLAYER B</text></g>
+    <rect x="465" y="198" width="270" height="236" rx="5" fill="#235340"/>
+    <path d="M560 253H626M612 240 626 253 612 266M640 282H574M588 269 574 282 588 295" fill="none" stroke="#c5d5bb" stroke-width="3"/>
+    <text x="600" y="343" font-size="20" font-weight="700" fill="#fff" text-anchor="middle">MATCHMAKING</text><text x="600" y="376" font-size="14" letter-spacing="3" fill="#c6d9c6" text-anchor="middle">SERVICE</text>
+    <text x="988" y="305" font-size="34" font-weight="700" fill="#235340" text-anchor="middle">A vs B</text><text x="988" y="351" font-size="18" fill="#58725c" text-anchor="middle">1vs1対戦へ</text>
+    <text x="66" y="502" font-size="16" fill="#506d59">2人のプレイヤーを組み合わせ、対戦につなげる。</text>
+  </g>
+</svg>

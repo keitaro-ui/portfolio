@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640">
+  <defs>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#c7d1c1" stroke-width="1"/></pattern>
+  </defs>
+  <rect width="960" height="640" fill="#e3e9df"/>
+  <rect x="40" y="40" width="880" height="560" fill="url(#grid)"/>
+  <path d="M200 430 480 270 760 430 480 590Z" fill="#cbd7c4"/>
+  <path d="M350 300 490 220 630 300 490 380Z" fill="#88a48e"/>
+  <path d="M350 300 490 380 490 490 350 410Z" fill="#3d7058"/>
+  <path d="M490 380 630 300 630 410 490 490Z" fill="#235340"/>
+  <path d="M230 270 350 200M630 200 750 270M310 460 220 408M680 450 750 408" fill="none" stroke="#72947b" stroke-width="2"/>
+  <circle cx="490" cy="155" r="24" fill="#b67b4d"/>
+  <path d="M490 190V219" stroke="#b67b4d" stroke-width="2" stroke-dasharray="5 5"/>
+  <text x="76" y="100" fill="#315740" font-family="Arial,sans-serif" font-weight="700" font-size="16" letter-spacing="3">YOUR PROJECT</text>
+  <text x="76" y="128" fill="#556852" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">SCREENSHOT PLACEHOLDER</text>
+  <text x="822" y="560" fill="#62775e" font-family="Georgia,serif" font-size="52">01</text>
+</svg>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>1vs1対戦におけるマッチングサービスの技術デモ（仮題） | 西岡慶太郎</title>
+  <meta name="description" content="西岡慶太郎の就職作品「1vs1対戦におけるマッチングサービスの技術デモ（仮題）」の紹介ページです。">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ移動</a>
+  <header class="site-header">
+    <a class="brand" href="./index.html" aria-label="ポートフォリオ ホーム"><span class="brand-mark" aria-hidden="true">P.</span> HOME</a>
+    <nav id="site-nav" aria-label="メインナビゲーション">
+      <a href="./project.html" aria-current="page">就職作品</a>
+      <a href="./index.html#skills">使用言語・ツール</a>
+      <a href="./index.html#about">自己紹介</a>
+      <a href="./index.html#contact">連絡先 ↗</a>
+    </nav>
+  </header>
+  <main id="main">
+    <div class="template-note"><span class="note-dot" aria-hidden="true"></span>このページは現在編集中です。制作情報や実装の詳細は順次追記します。</div>
+    <div class="wrap project-page">
+      <a class="back-link" href="./index.html#works">← ホームの就職作品へ</a>
+      <header class="project-header matching-header">
+        <p class="eyebrow">PROJECT 01 / 就職作品</p>
+        <p class="draft-label">仮題</p>
+        <h1>1vs1対戦における<br>マッチングサービスの技術デモ</h1>
+        <p class="project-lead">1vs1対戦の対戦相手を組み合わせるマッチングサービスを題材にした技術デモです。<br>画面・実行ログ・構成図に、実装の説明を添えて紹介します。</p>
+      </header>
+      <nav class="visual-index project-detail-index" aria-label="就職作品の目次">
+        <div class="detail-index-main"><a href="#concept">全体像</a><a href="#screenshots">機能・処理の詳細</a><a href="#architecture">構成図</a><a href="#project-notes">制作情報</a></div>
+        <div class="detail-index-items"><a href="#entry"><span>01</span> 操作画面</a><a href="#waiting"><span>02</span> 待機状態</a><a href="#matched"><span>03</span> 成立結果</a><a href="#logs"><span>04</span> 実行ログ</a><a href="#data"><span>05</span> データ管理</a><a href="#environment"><span>06</span> 実行環境</a></div>
+      </nav>
+      <section class="visual-section compact-overview" id="concept" aria-labelledby="concept-title">
+        <div class="visual-section-heading"><p class="eyebrow">01 / CONCEPT</p><h2 id="concept-title">サービスの全体像</h2></div>
+        <div class="detail-row overview-row">
+          <figure class="detail-media"><a href="./images/matchmaking-wide.svg" target="_blank" rel="noopener" aria-label="サービスの概念図の画像を大きく見る（新しいタブ）"><img src="./images/matchmaking-wide.svg" alt="2人のプレイヤーを組み合わせ、1vs1対戦につなげるサービスの概念図。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
+          <div class="detail-copy"><h3>1vs1対戦へつなぐ、<br>マッチングの仕組み。</h3><p>対戦相手を組み合わせるサービスを題材にした技術デモです。</p><p class="muted">左の画像はテーマを示す概念図です。実際の画面・処理・構成は、下の各項目で紹介予定です。</p></div>
+        </div>
+      </section>
+      <section class="visual-section feature-details" id="screenshots" aria-labelledby="screenshots-title">
+        <div class="visual-section-heading"><p class="eyebrow">02 / DETAILS</p><h2 id="screenshots-title">機能・処理ごとの詳細</h2></div>
+        <p class="section-draft-note">画像・説明を順次追加します。以下は紹介予定の項目で、実装内容に合わせて更新します。</p>
+        <!-- 詳細項目1：この article 全体をコピーして追加できます。id は重複させないでください。 -->
+        <article class="detail-row" id="entry" aria-labelledby="entry-title">
+          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
+          <figure class="detail-media"><a href="./images/demo-screen-placeholder.svg" target="_blank" rel="noopener" aria-label="受付・操作画面の画像を大きく見る（新しいタブ）"><img src="./images/demo-screen-placeholder.svg" alt="操作する画面を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
+          <div class="detail-copy">
+            <p class="detail-number">01 <span>紹介予定</span></p>
+            <h3 id="entry-title">受付・操作画面</h3>
+            <p>マッチングを始める操作と、画面に表示される情報を紹介します。</p>
+            <dl class="detail-points"><div><dt>操作の流れ</dt><dd>開始前に必要な操作、入力する情報、開始後の画面の変化を追記します。</dd></div><div><dt>実装のポイント</dt><dd>入力の確認やリクエストの送信など、自分で実装した部分を説明します。</dd></div></dl>
+          </div>
+        </article>
+        <!-- 詳細項目2：この article 全体をコピーして追加できます。id は重複させないでください。 -->
+        <article class="detail-row" id="waiting" aria-labelledby="waiting-title">
+          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
+          <figure class="detail-media"><a href="./images/matching-wait-placeholder.svg" target="_blank" rel="noopener" aria-label="マッチング待機の画像を大きく見る（新しいタブ）"><img src="./images/matching-wait-placeholder.svg" alt="待機中の画面・状態を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
+          <div class="detail-copy">
+            <p class="detail-number">02 <span>紹介予定</span></p>
+            <h3 id="waiting-title">マッチング待機</h3>
+            <p>対戦相手が決まるまでの待機状態を紹介します。</p>
+            <dl class="detail-points"><div><dt>処理の流れ</dt><dd>待機の開始から終了まで、どのように状態を管理するかを追記します。</dd></div><div><dt>工夫・確認したこと</dt><dd>待機人数やキャンセルなど、実際に対応・確認した内容を説明します。</dd></div></dl>
+          </div>
+        </article>
+        <!-- 詳細項目3：この article 全体をコピーして追加できます。id は重複させないでください。 -->
+        <article class="detail-row" id="matched" aria-labelledby="matched-title">
+          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
+          <figure class="detail-media"><a href="./images/matching-result-placeholder.svg" target="_blank" rel="noopener" aria-label="マッチング成立の画像を大きく見る（新しいタブ）"><img src="./images/matching-result-placeholder.svg" alt="組み合わせが決まった結果を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
+          <div class="detail-copy">
+            <p class="detail-number">03 <span>紹介予定</span></p>
+            <h3 id="matched-title">マッチング成立</h3>
+            <p>2人が組み合わされたことを確認できる画面を紹介します。</p>
+            <dl class="detail-points"><div><dt>組み合わせの条件</dt><dd>どの条件で対戦相手を決めるか、実際に採用したルールを追記します。</dd></div><div><dt>成立後の処理</dt><dd>両者への通知や次の画面への移動など、実装した処理と確認結果を説明します。</dd></div></dl>
+          </div>
+        </article>
+        <!-- 詳細項目4：この article 全体をコピーして追加できます。id は重複させないでください。 -->
+        <article class="detail-row" id="logs" aria-labelledby="logs-title">
+          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
+          <figure class="detail-media"><a href="./images/server-log-placeholder.svg" target="_blank" rel="noopener" aria-label="サーバーの処理・ログの画像を大きく見る（新しいタブ）"><img src="./images/server-log-placeholder.svg" alt="処理を確認できる実行ログを追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
+          <div class="detail-copy">
+            <p class="detail-number">04 <span>紹介予定</span></p>
+            <h3 id="logs-title">サーバーの処理・ログ</h3>
+            <p>画面の操作に対して、サーバー側で何が起きたかを紹介します。</p>
+            <dl class="detail-points"><div><dt>ログの見どころ</dt><dd>受付・待機・成立などの処理に対応する行や、注目してほしい値を追記します。</dd></div><div><dt>検証したこと</dt><dd>試した条件と結果、不具合への対応など、確認できた内容を説明します。</dd></div></dl>
+          </div>
+        </article>
+        <!-- 詳細項目5：この article 全体をコピーして追加できます。id は重複させないでください。 -->
+        <article class="detail-row" id="data" aria-labelledby="data-title">
+          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
+          <figure class="detail-media"><a href="./images/matching-data-placeholder.svg" target="_blank" rel="noopener" aria-label="データの管理の画像を大きく見る（新しいタブ）"><img src="./images/matching-data-placeholder.svg" alt="保存する情報・データの関係を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
+          <div class="detail-copy">
+            <p class="detail-number">05 <span>紹介予定</span></p>
+            <h3 id="data-title">データの管理</h3>
+            <p>データの管理方法を、図や確認画面とともに紹介する欄です。</p>
+            <dl class="detail-points"><div><dt>管理する情報</dt><dd>データベースを使う場合は、保存する情報やテーブルの関係を追記します。</dd></div><div><dt>設計の理由</dt><dd>採用した管理方法と、その構成にした理由を説明します。使用しない場合は欄を削除できます。</dd></div></dl>
+          </div>
+        </article>
+        <!-- 詳細項目6：この article 全体をコピーして追加できます。id は重複させないでください。 -->
+        <article class="detail-row" id="environment" aria-labelledby="environment-title">
+          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
+          <figure class="detail-media"><a href="./images/matching-environment-placeholder.svg" target="_blank" rel="noopener" aria-label="実行環境・動作確認の画像を大きく見る（新しいタブ）"><img src="./images/matching-environment-placeholder.svg" alt="サーバーの実行環境・確認画面を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
+          <div class="detail-copy">
+            <p class="detail-number">06 <span>紹介予定</span></p>
+            <h3 id="environment-title">実行環境・動作確認</h3>
+            <p>どこで動かし、どのように動作確認したかを紹介する欄です。</p>
+            <dl class="detail-points"><div><dt>環境の構成</dt><dd>実際に使用した環境を追記します。AWSを使用した場合は、利用したサービスと役割を説明します。</dd></div><div><dt>動作確認の結果</dt><dd>実行手順と確認した条件・結果を追記します。未検証の内容は今後の課題として記載します。</dd></div></dl>
+          </div>
+        </article>
+      </section>
+      <section class="visual-section" id="architecture" aria-labelledby="architecture-title">
+        <div class="visual-section-heading"><p class="eyebrow">03 / ARCHITECTURE</p><h2 id="architecture-title">システム構成図</h2></div>
+        <div class="detail-row overview-row">
+          <figure class="detail-media"><a href="./images/architecture-placeholder.svg" target="_blank" rel="noopener" aria-label="システム構成図の画像を大きく見る（新しいタブ）"><img src="./images/architecture-placeholder.svg" alt="実際のシステム構成図を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
+          <div class="detail-copy"><h3>採用した技術と、<br>それぞれの役割</h3><p>使用した言語・データベース・実行環境を、実際の構成に合わせて追記します。</p><p class="muted">通信の流れや各要素の役割が伝わる図を掲載予定です。</p></div>
+        </div>
+      </section>
+      <section class="project-notes" id="project-notes" aria-labelledby="project-notes-title">
+        <div><p class="eyebrow">04 / PROJECT NOTES</p><h2 id="project-notes-title">制作情報と補足</h2>
+          <dl class="project-meta"><div><dt>制作期間</dt><dd>追記予定</dd></div><div><dt>制作人数</dt><dd>追記予定</dd></div><div><dt>担当</dt><dd>追記予定</dd></div><div><dt>使用技術</dt><dd>追記予定</dd></div></dl>
+          <p class="muted">公開できる動画・ソースコードへのリンクは追加予定です。</p>
+        </div>
+        <div class="project-explanations">
+          <details><summary>制作の目的・テーマを選んだ理由</summary><div class="detail-content"><p>1vs1対戦におけるマッチングサービスを題材としています。テーマを選んだ理由と、この技術デモで確かめたいことを追記します。</p></div></details>
+          <details><summary>設計・実装で工夫したこと</summary><div class="detail-content"><p>対戦相手を選ぶ条件、待機中の状態、同時リクエストへの対応など、実際に実装した内容に合わせて説明します。</p></div></details>
+          <details><summary>検証結果・学び・今後の改善</summary><div class="detail-content"><p>検証した環境・条件・結果と、残っている課題を追記します。測定値を掲載する場合は、測定条件も添えます。</p></div></details>
+        </div>
+      </section>
+      <div class="page-actions"><a class="button" href="./index.html#works">← ホームの就職作品へ戻る</a></div>
+    </div>
+  </main>
+  <footer class="site-footer wrap"><span>西岡慶太郎 / PORTFOLIO</span><div class="footer-links"><a href="./team.html">過去のチーム制作</a><a href="#main">ページ上部へ ↑</a></div></footer>
+</body>
+</html>
