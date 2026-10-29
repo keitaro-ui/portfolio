@@ -12,10 +12,9 @@
   <header class="site-header">
     <a class="brand" href="./index.html" aria-label="ポートフォリオ ホーム"><span class="brand-mark" aria-hidden="true">P.</span> HOME</a>
     <nav id="site-nav" aria-label="メインナビゲーション">
+      <a href="./index.html">トップページ</a>
       <a href="./project.html" aria-current="page">就職作品</a>
-      <a href="./index.html#skills">使用言語・ツール</a>
-      <a href="./index.html#about">自己紹介</a>
-      <a href="./index.html#contact">連絡先 ↗</a>
+      <a href="./team.html">過去のチーム制作</a>
     </nav>
   </header>
   <main id="main">
@@ -26,7 +25,8 @@
         <p class="eyebrow">PROJECT 01 / 就職作品</p>
         <p class="draft-label">仮題</p>
         <h1>1vs1対戦における<br>マッチングサービスの技術デモ</h1>
-        <p class="project-lead">1vs1対戦の対戦相手を組み合わせるマッチングサービスを題材にした技術デモです。<br>画面・実行ログ・構成図に、実装の説明を添えて紹介します。</p>
+        <p class="project-lead">1vs1対戦の対戦相手を組み合わせるマッチングサービスを題材にした技術デモです。<br>Goによるサーバー開発と、C++・TCP/UDP・Dockerを用いた制作内容を紹介します。</p>
+        <ul class="project-tech-tags" aria-label="就職作品の主な使用技術"><li>C++</li><li>Go</li><li>TCP / UDP</li><li>Docker</li></ul>
       </header>
       <nav class="visual-index project-detail-index" aria-label="就職作品の目次">
         <div class="detail-index-main"><a href="#concept">全体像</a><a href="#screenshots">機能・処理の詳細</a><a href="#architecture">構成図</a><a href="#project-notes">制作情報</a></div>
@@ -82,7 +82,7 @@
           <div class="detail-copy">
             <p class="detail-number">04 <span>紹介予定</span></p>
             <h3 id="logs-title">サーバーの処理・ログ</h3>
-            <p>画面の操作に対して、サーバー側で何が起きたかを紹介します。</p>
+            <p>Goで開発しているサーバーについて、画面の操作に応じた処理を実行ログとともに紹介します。</p>
             <dl class="detail-points"><div><dt>ログの見どころ</dt><dd>受付・待機・成立などの処理に対応する行や、注目してほしい値を追記します。</dd></div><div><dt>検証したこと</dt><dd>試した条件と結果、不具合への対応など、確認できた内容を説明します。</dd></div></dl>
           </div>
         </article>
@@ -104,7 +104,7 @@
           <div class="detail-copy">
             <p class="detail-number">06 <span>紹介予定</span></p>
             <h3 id="environment-title">実行環境・動作確認</h3>
-            <p>どこで動かし、どのように動作確認したかを紹介する欄です。</p>
+            <p>Dockerを含む実行環境と、動作確認の手順を紹介する欄です。</p>
             <dl class="detail-points"><div><dt>環境の構成</dt><dd>実際に使用した環境を追記します。AWSを使用した場合は、利用したサービスと役割を説明します。</dd></div><div><dt>動作確認の結果</dt><dd>実行手順と確認した条件・結果を追記します。未検証の内容は今後の課題として記載します。</dd></div></dl>
           </div>
         </article>
@@ -113,12 +113,12 @@
         <div class="visual-section-heading"><p class="eyebrow">03 / ARCHITECTURE</p><h2 id="architecture-title">システム構成図</h2></div>
         <div class="detail-row overview-row">
           <figure class="detail-media"><a href="./images/architecture-placeholder.svg" target="_blank" rel="noopener" aria-label="システム構成図の画像を大きく見る（新しいタブ）"><img src="./images/architecture-placeholder.svg" alt="実際のシステム構成図を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
-          <div class="detail-copy"><h3>採用した技術と、<br>それぞれの役割</h3><p>使用した言語・データベース・実行環境を、実際の構成に合わせて追記します。</p><p class="muted">通信の流れや各要素の役割が伝わる図を掲載予定です。</p></div>
+          <div class="detail-copy"><h3>採用した技術と、<br>それぞれの役割</h3><p>使用した言語・データベース・実行環境を、実際の構成に合わせて追記します。</p><p class="muted">C++・Go間の通信とTCP/UDPの用途、Dockerの構成が伝わる図を掲載予定です。</p></div>
         </div>
       </section>
       <section class="project-notes" id="project-notes" aria-labelledby="project-notes-title">
         <div><p class="eyebrow">04 / PROJECT NOTES</p><h2 id="project-notes-title">制作情報と補足</h2>
-          <dl class="project-meta"><div><dt>制作期間</dt><dd>追記予定</dd></div><div><dt>制作人数</dt><dd>追記予定</dd></div><div><dt>担当</dt><dd>追記予定</dd></div><div><dt>使用技術</dt><dd>追記予定</dd></div></dl>
+          <dl class="project-meta"><div><dt>制作期間</dt><dd>追記予定</dd></div><div><dt>制作人数</dt><dd>追記予定</dd></div><div><dt>担当</dt><dd>追記予定</dd></div><div><dt>使用技術</dt><dd>C++ / Go / TCP・UDP / Docker</dd></div></dl>
           <p class="muted">公開できる動画・ソースコードへのリンクは追加予定です。</p>
         </div>
         <div class="project-explanations">

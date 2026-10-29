@@ -15,3 +15,7 @@
 | images/tools/visualstudio.svg | https://raw.githubusercontent.com/devicons/devicon/master/icons/visualstudio/visualstudio-original.svg |
 
 その他の概念図と画像差し替え用のSVGは、このポートフォリオ用に作成したものです。DirectX 11の「DX 11」文字アイコンも独自に作成したもので、公式ロゴではありません。
+
+Docker・Ubuntuのロゴ追加日：2026-10-29。上記と同じDeviconのMITライセンスに従います。
+- images/tools/docker.svg : https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg
+- images/tools/ubuntu.svg : https://raw.githubusercontent.com/devicons/devicon/master/icons/ubuntu/ubuntu-original.svg

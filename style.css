@@ -91,10 +91,10 @@ summary { cursor: pointer; color: var(--accent); font-weight: 600; padding-block
 .skills-grid p { font-size: .85rem; color: #516057; }
 .skills-grid .skill-label { font-weight: 700; margin-bottom: 7px; color: var(--ink); }
 .about-section { display: grid; grid-template-columns: 1fr 1.65fr; gap: 80px; padding-block: 82px; }
-.about-initial { margin-top: 24px; font-size: 4.5rem; font-family: Georgia, serif; color: #b6c7b8; letter-spacing: -.06em; }
+.about-photo { display: block; width: 300px; max-width: 100%; height: auto; margin-top: 24px; border-radius: 8px; }
 .about-name { font-size: 1.5rem; margin-bottom: 18px; }
 .about-name span { display: block; font-size: .75rem; font-weight: 400; color: var(--muted); margin-top: 6px; }
-.about-section > div > p:not(.eyebrow):not(.about-initial) { font-size: .88rem; color: var(--muted); }
+.about-section > div > p:not(.eyebrow) { font-size: .88rem; color: var(--muted); }
 .contact-section { background: #203e33; color: white; padding-block: 50px; }
 .contact-inner { display: grid; grid-template-columns: 1fr 1.65fr; gap: 80px; align-items: center; }
 .contact-inner .eyebrow { color: #bed0bf; margin-bottom: 7px; }
@@ -221,3 +221,27 @@ summary { cursor: pointer; color: var(--accent); font-weight: 600; padding-block
   body { min-width: 0; background: white; }
   .wrap { width: 100%; }
 }
+
+/* 就職作品の技術と、学年別のチーム制作 */
+.project-tech-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 18px 0 0; }
+.project-tech-tags li { background: var(--accent); color: white; padding: 4px 14px; font-size: .82rem; font-weight: 700; letter-spacing: .02em; }
+.team-year-index { margin-bottom: 16px; }
+.team-page-note { color: var(--muted); font-size: .8rem; margin-bottom: 30px; }
+.team-year { margin-bottom: 52px; }
+.team-year-heading { display: flex; gap: 24px; align-items: center; padding-bottom: 22px; border-bottom: 2px solid var(--accent); }
+.team-year-heading .eyebrow { margin-bottom: 4px; }
+.team-year-heading h2 { font-size: 1.7rem; }
+.team-year-number { font: 3rem Georgia, serif; color: #9eb6a5; }
+.team-work { display: grid; grid-template-columns: 1.12fr 1fr; gap: 36px; padding: 28px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.team-work-image { margin: 0; border: 1px solid var(--line); background: white; }
+.team-work-image img { width: 100%; height: 310px; object-fit: contain; background: var(--pale); }
+.team-work-image figcaption { padding: 8px 14px; color: var(--muted); font-size: .72rem; border-top: 1px solid var(--line); }
+.team-work-copy .eyebrow { margin-bottom: 8px; }
+.team-work-copy h3 { margin-bottom: 10px; font-size: 1.4rem; }
+.team-work-summary { color: var(--muted); font-size: .85rem; }
+.team-facts { font-size: .8rem; margin: 16px 0; }
+.team-facts > div { display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.team-facts dt { font-weight: 700; color: var(--accent); }
+.team-facts dd { margin: 0; color: var(--muted); }
+.team-challenge h4 { margin: 0 0 6px; font-size: .85rem; color: var(--accent); }
+.team-challenge p { font-size: .82rem; color: var(--muted); }

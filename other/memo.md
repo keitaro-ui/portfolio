@@ -435,3 +435,15 @@ GitHub Pages の 404 は、[公式の確認項目](https://docs.github.com/en/pa
 Google Sites にコードを追加する場合は、公式に案内されている「挿入 → 埋め込む → コードを埋め込む」を使います。CSS は `<style>`、JavaScript は `<script>` 内に書く方式で、外部ページの埋め込み機能もあります。Google Sites で制作を続けたい場合も、この教材の情報整理や作品説明の型は利用できます。[Google Sites の埋め込み機能](https://support.google.com/sites/answer/90569?hl=en)
 
 追加の参考：[先輩のポートフォリオ](https://sites.google.com/view/m07iewaki) のロゴ一覧と、[作品ページ](https://sites.google.com/view/m07iewaki/作品) の「画像＋短い説明」の見せ方を参考にしました。先輩の実際の作品画像や実績は流用していません。
+
+## 学年別のチーム制作ページを編集する
+
+team.html に2年次の作品欄を2件、3年次の作品欄を1件用意しています。これは記入用の枠です。実際の作品数に合わせて増減してください。
+
+作品名・お題・担当箇所・期間・人数・使用技術・挑戦したことを記入します。先輩の実績や作品名は使用していません。参考：https://sites.google.com/view/m07iewaki/作品
+
+仮画像は images/team-year2-01.svg、team-year2-02.svg、team-year3-01.svg です。写真を images に保存し、team.html の対応する img の src と alt を変更します。画像の枠は高さ310pxで、全体を収めて表示します。
+
+作品を追加する場合は article class="team-work" から対応する /article までを複製し、見出しの id と aria-labelledby を重複しない名前に変更してください。
+
+志望職種は「サーバーサイドエンジニア志望」に統一しました。Goは「個人制作で使用」、MySQL・AWSは「使用経験あり」としています。就職作品の主な技術はC++・Go・TCP/UDP・Dockerを表示しています。具体的な利用サービスや担当処理は、実際の内容に合わせて追記してください。

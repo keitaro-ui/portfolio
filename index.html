@@ -13,10 +13,9 @@
   <header class="site-header">
     <a class="brand" href="./index.html" aria-label="ポートフォリオ ホーム"><span class="brand-mark" aria-hidden="true">P.</span> HOME</a>
     <nav id="site-nav" aria-label="メインナビゲーション">
-      <a href="#works">就職作品</a>
-      <a href="#skills">使用言語・ツール</a>
-      <a href="#about">自己紹介</a>
-      <a href="#contact">連絡先 <span aria-hidden="true">↗</span></a>
+      <a href="./index.html">トップページ</a>
+      <a href="./project.html">就職作品</a>
+      <a href="./team.html">過去のチーム制作</a>
     </nav>
   </header>
 
@@ -24,23 +23,26 @@
     <!-- サンプルの文章を自分の情報に置き換えた後、この案内を削除できます。 -->
     <div class="template-note"><span class="note-dot" aria-hidden="true">
       </span>このポートフォリオは現在も編集中のため、不足しているページや説明があります。</div>
+    <div class="template-note"><span class="note-dot" aria-hidden="true">
+      </span>就職作品は現在開発中です。実装済みの機能と今後の拡張予定を分けて紹介しています。</div>
 
     <section class="hero wrap" aria-labelledby="hero-title">
       <div>
         <p class="eyebrow">PORTFOLIO / SELECTED WORKS</p>
         <h1 id="hero-title">つくったものと、<br><span>考えたこと。</span></h1>
         <!-- 編集2：氏名・希望職種・紹介文 -->
-        <p class="hero-name">西岡慶太郎 <span>／ ネットワークエンジニア志望</span></p>
-        <p class="hero-description">Go言語、MySQL、AWSなどに力を入れて学んでいます。
-          <br class="desktop-break">目に見えないサービスをさらに洗練させていきたいです。</p>
+        <p class="hero-name">西岡慶太郎 <span>／ サーバーサイドエンジニア志望</span></p>
+        <p class="hero-description"> C++とGoを用いたオンライン対戦ゲームを個人開発しています。
+          <br class="desktop-break">レートに基づくマッチングや通信処理を通じて、ゲームの面白さをサーバー側から支える技術を学んでいます。</p>
           <!--ここにはどんな体験をつくりたいか、何に力を入れて学んでいるか。あなたの制作の軸などをかく-->
         <a class="button" href="#works">就職作品を見る <span aria-hidden="true">↓</span></a>
       </div>
       <aside class="hero-index" aria-label="このサイトの内容">
-        <p class="eyebrow">IN THIS PORTFOLIO</p>
+        <p class="eyebrow" style="font-size: 40px;">　目次</p>
         <a href="#works"><span>01</span>就職作品 <span aria-hidden="true">↗</span></a>
-        <a href="#skills"><span>02</span>使用言語・ツール <span aria-hidden="true">↗</span></a>
-        <a href="#about"><span>03</span>プロフィール <span aria-hidden="true">↗</span></a>
+        <!-- <a href="./team.html"><span>02</span>過去のチーム制作 <span aria-hidden="true">↗</span></a> -->
+        <a href="#skills"><span>03</span>使用言語・ツール <span aria-hidden="true">↗</span></a>
+        <a href="#about"><span>04</span>プロフィール <span aria-hidden="true">↗</span></a>
       </aside>
     </section>
 
@@ -53,48 +55,79 @@
       <article class="featured-work visual-feature">
         <!-- メイン画像：実際の作品画像ができたら src と alt を変更します。 -->
         <a class="work-image" href="./project.html" aria-label="就職作品の画像と詳細を見る">
-          <img src="./images/matchmaking-wide.svg" width="1200" height="560" alt="2人のプレイヤーを組み合わせ、1vs1対戦につなげるマッチングサービスの概念図。">
+          <img src="./images/matchmaking-wide.svg" width="1200" height="560" alt="1vs1対戦ゲームのマッチングシステムの概念図">
           <span class="image-caption">CONCEPT / 作品テーマの概念図 <span>PROJECT 01 ↗</span></span>
         </a>
         <div class="featured-copy">
-          <div><p class="eyebrow">PROJECT 01 / 就職作品・仮題</p><h3>1vs1対戦における<br>マッチングサービスの技術デモ</h3></div>
-          <div><p>対戦相手を組み合わせる仕組みを、画面・ログ・構成図を通して紹介します。</p><a class="text-link" href="./project.html">画像と詳しい説明を見る <span aria-hidden="true">↗</span></a></div>
+          <div><p class="eyebrow">PROJECT 01 / 個人制作・開発中</p><h3>1vs1対戦ゲームの<br>マッチングシステム</h3><ul class="project-tech-tags" aria-label="就職作品の主な使用技術"><li>C++</li><li>Go</li><li>TCP / UDP</li><li>Docker</li></ul></div>
+          <div><p> C++によるゲームクライアントと、Goによるゲームサーバーを組み合わせたオンライン対戦ゲームを開発しています。</p>
+            <p>レート差に基づくマッチング、対戦用Roomの管理、TCP・UDPを使い分けた通信処理を実装しています。</p>
+            <p>特にサーバー側の設計に重点を置き、対戦相手の決定からゲーム開始、切断時のRoom解散までの一連の処理を構築しました。</p>
+            <a class="text-link" href="./project.html">詳しい説明を見る <span aria-hidden="true">↗</span></a></div>
         </div>
       </article>
 
+    
     </section>
 
     <section class="skills-section" id="skills" aria-labelledby="skills-title">
       <div class="section wrap">
         <div class="section-heading">
           <div><p class="eyebrow">02 / LANGUAGES &amp; TOOLS</p><h2 id="skills-title">使用言語・ツール</h2></div>
-          <p>学習している技術と、これから紹介する活用経験。</p>
+          <p>個人制作や授業で使用した技術・ツール。</p>
         </div>
         <!-- 「学習中」と作品での「使用実績」は分けて記載します。 -->
         <div class="tool-grid">
-          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/aws.svg" width="128" height="128" alt="AWS"></div><p class="tool-category">CLOUD</p><h3>AWS</h3><span class="tool-state">学習中</span><p>使用したサービスや構築内容は、今後追記します。</p></article>
-          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/c.svg" width="128" height="128" alt="C言語"></div><p class="tool-category">LANGUAGE</p><h3>C言語</h3><span class="tool-state">授業・制作で使用</span><p>授業や制作で使用した経験があります。</p></article>
-          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/go.svg" width="128" height="128" alt="Go"></div><p class="tool-category">LANGUAGE</p><h3>Go</h3><span class="tool-state">学習中</span><p>学習内容や実装した機能は、今後追記します。</p></article>
-          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/mysql.svg" width="128" height="128" alt="MySQL"></div><p class="tool-category">DATABASE</p><h3>MySQL</h3><span class="tool-state">学習中</span><p>データの設計・操作の経験は、今後追記します。</p></article>
-          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/git.svg" width="128" height="128" alt="Git"></div><p class="tool-category">VERSION CONTROL</p><h3>Git</h3><span class="tool-state">使用経験あり</span><p>ソースコードの変更履歴を管理するバージョン管理システム。</p></article>
-          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/github.svg" width="128" height="128" alt="GitHub"></div><p class="tool-category">REPOSITORY HOSTING</p><h3>GitHub</h3><span class="tool-state">使用経験あり</span><p>Gitリポジトリの管理・共有に使うサービス。</p></article>
-          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/sourcetree.svg" width="128" height="128" alt="SourceTree"></div><p class="tool-category">GIT CLIENT</p><h3>SourceTree</h3><span class="tool-state">使用経験あり</span><p>Gitを画面上で操作できるGUIクライアント。</p></article>
-          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/directx11.svg" width="128" height="128" alt="DirectX 11"></div><p class="tool-category">GRAPHICS API</p><h3>DirectX 11</h3><span class="tool-state">使用経験あり</span><p>ゲームなどのグラフィックス描画に使用するAPI。</p></article>
-          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/cplusplus.svg" width="128" height="128" alt="C++"></div><p class="tool-category">LANGUAGE</p><h3>C++</h3><span class="tool-state">使用経験あり</span><p>使用した制作物や実装内容は、今後追記します。</p></article>
-          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/visualstudio.svg" width="128" height="128" alt="Visual Studio"></div><p class="tool-category">DEVELOPMENT ENVIRONMENT</p><h3>Visual Studio 2022</h3><span class="tool-state">使用経験あり</span><p>コードの編集・ビルド・デバッグを行う統合開発環境。</p></article>
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/docker.svg" width="128" height="128" alt="Docker"></div>
+            <p class="tool-category">CONTAINER</p><h3>Docker</h3><span class="tool-state">個人制作で使用</span><p>Goサーバーの開発環境に使用。Docker Composeを用いたコンテナのビルドや起動、開発環境の管理に取り組んでいます。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/ubuntu.svg" width="128" height="128" alt="Ubuntu"></div>
+            <p class="tool-category">OPERATING SYSTEM</p><h3>Ubuntu 22.04</h3><span class="tool-state">個人製作で使用</span><p>Linux環境として使用した経験があります。実際に行った設定や作業内容は、今後追記します。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/aws.svg" width="128" height="128" alt="AWS"></div>
+            <p class="tool-category">CLOUD</p><h3>AWS</h3><span class="tool-state">個人製作で使用</span><p>現在の就職作品では使用しておらず、将来的なサーバー運用への活用を検討しています。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/c.svg" width="128" height="128" alt="C言語"></div>
+            <p class="tool-category">LANGUAGE</p><h3>C言語</h3><span class="tool-state">授業・チーム制作で使用</span><p>授業や制作で使用した経験があります。基本的な文法やポインタ、メモリの扱いなど、プログラミングの基礎を学びました。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/go.svg" width="128" height="128" alt="Go"></div>
+            <p class="tool-category">LANGUAGE</p><h3>Go</h3><span class="tool-state">個人制作で使用</span><p>オンライン対戦ゲームのサーバー開発に使用しています。TCP・UDPによる通信処理、レートマッチング、Room管理、切断処理などを実装しています。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/mysql.svg" width="128" height="128" alt="MySQL"></div>
+            <p class="tool-category">DATABASE</p><h3>MySQL</h3><span class="tool-state">個人製作で使用</span><p>現在の就職作品には未導入ですが、対戦レートなどの永続化に向けてDBの導入を計画しています。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/git.svg" width="128" height="128" alt="Git"></div>
+            <p class="tool-category">VERSION CONTROL</p><h3>Git</h3><span class="tool-state">チーム制作・個人製作で使用</span><p>個人制作やチーム制作のソースコードを管理するために使用しています。変更履歴の管理やバージョン管理に活用しています。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/github.svg" width="128" height="128" alt="GitHub"></div>
+            <p class="tool-category">REPOSITORY HOSTING</p><h3>GitHub</h3><span class="tool-state">チーム制作・個人製作で使用</span><p>制作プロジェクトのリポジトリ管理に使用。GitHub Pagesを利用したポートフォリオの公開にも活用しています。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/sourcetree.svg" width="128" height="128" alt="SourceTree"></div>
+            <p class="tool-category">GIT CLIENT</p><h3>SourceTree</h3><span class="tool-state">チーム制作・個人製作で使用</span><p>Gitの操作に使用しています。コミット履歴の確認やブランチ管理、PushなどをGUI上で行っています。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/directx11.svg" width="128" height="128" alt="DirectX 11"></div>
+            <p class="tool-category">GRAPHICS API</p><h3>DirectX 11</h3><span class="tool-state">授業・チーム制作・個人製作で使用</span><p>3Dゲームの描画に使用。プレイヤーやゲーム空間の描画、カメラ制御などを実装しています。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/cplusplus.svg" width="128" height="128" alt="C++"></div>
+            <p class="tool-category">LANGUAGE</p><h3>C++</h3><span class="tool-state">授業・チーム制作・個人制作で使用</span><p>ゲームクライアントの開発に使用。プレイヤー制御、状態管理、ネットワーク通信、シーン遷移などを実装しています。</p></article>
+
+          <article class="tool-item"><div class="tool-logo"><img src="./images/tools/visualstudio.svg" width="128" height="128" alt="Visual Studio"></div>
+            <p class="tool-category">DEVELOPMENT ENVIRONMENT</p><h3>Visual Studio 2022</h3><span class="tool-state">授業・チーム制作・個人制作で使用</span><p>C++によるゲーム開発に使用。ビルドやデバッグ、ブレークポイントによる動作確認を行っています。</p></article>
         </div>
       </div>
     </section>
 
     <section class="section wrap about-section" id="about" aria-labelledby="about-title">
-      <div><p class="eyebrow">03 / ABOUT ME</p><h2 id="about-title">自己紹介</h2><p class="about-initial" aria-hidden="true">YOU.</p></div>
+      <div><p class="eyebrow">03 / ABOUT ME</p><h2 id="about-title">自己紹介</h2><img class="about-photo" src="./images/IMG_20261008_181826.jpg" alt="西岡慶太郎のプロフィール写真" loading="lazy"></div>
       <div>
         <h3 class="about-name">西岡慶太郎 <span>にしおかけいたろう</span></h3>
-        <p>学んでいる分野、制作を始めたきっかけ、これから取り組みたいことを書きます。応募先で挑戦したいことにつながる内容を選びましょう。</p>
-        <dl class="project-meta">
+        <p>ECCコンピュータ専門学校でゲームプログラミングを学んでいます。現在はサーバーサイドエンジニアを志望し、C++とGoを用いたオンライン対戦ゲームを個人開発しています。</p>
+        <p>ゲームの根幹を支えるサーバー技術に魅力を感じ、特にマッチングシステムの設計・実装に力を入れています。実装した機能が想定どおりに動作する達成感を大切にしながら、ネットワークやデータベースなどの知識を深めています。</p> 
+
+          <dl class="project-meta">
           <div><dt>所属</dt><dd>ECCコンピュータ専門学校 ゲーム開発エキスパートコース 3年</dd></div>
           <div><dt>卒業予定</dt><dd>2028年3月卒業予定</dd></div>
-          <div><dt>希望職種</dt><dd>ネットワークプログラマ・サーバーサイドプログラマ・バックエンドプログラマ</dd></div>
+          <div><dt>希望職種</dt><dd>サーバーサイドエンジニア志望</dd></div>
           <div><dt>趣味</dt><dd>カラオケ、バイク、旅行など</dd></div>
         </dl>
       </div>
