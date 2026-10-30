@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
-  <rect x="8" y="8" width="112" height="112" rx="16" fill="#edf3e7"/>
-  <path d="M25 27h78M25 101h78" stroke="#83a34d" stroke-width="3"/>
-  <text x="64" y="68" font-family="Arial,sans-serif" font-weight="700" font-size="39" text-anchor="middle" fill="#41671e">DX</text>
-  <text x="64" y="94" font-family="Arial,sans-serif" font-weight="700" font-size="24" text-anchor="middle" fill="#41671e">11</text>
-</svg>

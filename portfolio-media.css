@@ -1,0 +1,65 @@
+/* project.htmlだけの文字・画像サイズ */
+.project-readable { font-size: 18px; }
+.project-readable .project-lead { font-size: 1.15rem; }
+.project-readable .matching-header h1 { font-size: 2.65rem; }
+.project-readable .visual-section-heading h2, .project-readable .project-notes h2 { font-size: 1.8rem; }
+.project-readable .detail-copy h3 { font-size: 1.5rem; }
+.project-readable .detail-copy > p:not(.detail-number), .project-readable .detail-points,
+.project-readable .reflection-body, .project-readable .architecture-summary,
+.project-readable .implementation-note, .project-readable .tech-review-note { font-size: 1.125rem; line-height: 1.95; }
+.project-readable .detail-number { font-size: 1.35rem; }
+.project-readable .detail-number span, .project-readable .eyebrow { font-size: .85rem; }
+.project-readable .muted, .project-readable .section-draft-note, .project-readable .project-meta,
+.project-readable .tech-overview-note, .project-readable .tech-terms, .project-readable .tech-facts-note { font-size: 1rem; }
+.project-readable .toc-label, .project-readable .toc-details ol a,
+.project-readable .toc-reflection ul a, .project-readable .back-link { font-size: .95rem; }
+.project-readable .toc-details ol span { font-size: .9rem; }
+.project-readable .toc-sections > li > a, .project-readable .project-tech-tags li,
+.project-readable .tech-keypoints li { font-size: 1rem; }
+.project-readable .toc-sections { grid-template-columns: .9fr 3.7fr 1fr 1fr; gap: 18px; }
+.project-readable .toc-details { padding-inline: 18px; }
+.project-readable .reflection-heading h2 { font-size: 2.1rem; }
+.project-readable .reflection-item h3 { font-size: 1.35rem; }
+.project-readable .gallery-label { font-size: 1.2rem; }
+.project-readable .detail-row { grid-template-columns: minmax(0,.95fr) minmax(0,1.2fr); }
+.project-readable .detail-media img { height: auto; max-height: 280px; object-fit: contain; }
+.project-readable .overview-row .detail-media img { height: 225px; }
+.project-readable .evidence-shot figcaption, .project-readable .architecture-image figcaption { font-size: .95rem; line-height: 1.8; }
+.project-readable .evidence-gallery { max-width: 980px; margin-inline: auto; }
+.project-readable .evidence-gallery .evidence-shot a { height: auto; max-height: none; }
+.project-readable .evidence-gallery .evidence-shot img { height: 235px; max-height: 235px; }
+.project-readable .architecture-image { max-width: 980px; }
+.project-readable .image-open { font-size: .85rem; }
+[data-image-preview] { cursor: zoom-in; }
+
+/* 同じページで画像を拡大。dialogでフォーカスを拡大画面に保ちます。 */
+.image-viewer { width: min(1440px, 94vw); max-width: 94vw; max-height: 94vh; padding: 20px; border: 1px solid #c6d2ca; border-radius: 12px; background: #f7f7f2; color: #202c2a; }
+.image-viewer::backdrop { background: rgb(10 20 16 / .82); }
+.viewer-toolbar { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.viewer-toolbar h2 { font-size: 1.1rem; margin-right: auto; }
+.viewer-toolbar button, .carousel-controls button { font: inherit; cursor: pointer; border: 1px solid #b8c8bc; color: #194b3a; background: white; padding: 7px 16px; border-radius: 5px; }
+.viewer-toolbar button:hover, .carousel-controls button:hover { background: #e9eee7; }
+.viewer-viewport { overflow: auto; max-height: 70vh; background: #e5ebe5; }
+.viewer-viewport img { display: block; width: auto; max-width: 100%; max-height: 70vh; height: auto; margin: auto; object-fit: contain; }
+.viewer-viewport.is-actual img { max-width: none; max-height: none; margin: 0; }
+.viewer-caption { font-size: .95rem; line-height: 1.65; margin: 12px 0 0; }
+body.image-viewer-open { overflow: hidden; }
+
+/* チーム作品ごとの手動スライド。自動では切り替えません。 */
+.team-work-list { border-top: 2px solid var(--accent); }
+.team-carousel { min-width: 0; border: 1px solid var(--line); background: white; align-self: start; }
+.carousel-window { overflow-x: auto; scroll-snap-type: x mandatory; }
+.carousel-track { display: flex; transition: transform .25s ease; }
+.carousel-slide { flex: 0 0 100%; min-width: 0; margin: 0; scroll-snap-align: start; }
+.carousel-slide img { width: 100%; height: 300px; object-fit: contain; background: var(--pale); }
+.carousel-slide figcaption { border-top: 1px solid var(--line); padding: 10px 16px; font-size: .82rem; color: var(--muted); }
+.team-carousel.is-enhanced .carousel-window { overflow: hidden; }
+.carousel-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-top: 1px solid var(--line); }
+.carousel-dots { display: flex; gap: 10px; margin-left: auto; }
+.carousel-dots button { width: 12px; height: 12px; border-radius: 50%; padding: 0; background: #e4eae3; }
+.carousel-dots button[aria-current="true"] { background: var(--accent); border-color: var(--accent); }
+.carousel-count { min-width: 46px; text-align: center; font-size: .8rem; color: var(--muted); }
+.carousel-controls button:disabled { opacity: .35; cursor: default; }
+@media (prefers-reduced-motion: reduce) { .carousel-track { transition: none; } }
+
+.team-work-copy h2 { margin-bottom: 10px; font-size: 1.4rem; }

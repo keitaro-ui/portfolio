@@ -75,8 +75,10 @@
     .gallery-label{font-size:1.05rem;font-weight:700;margin:1rem 0 .55rem;}
     @media(max-width:720px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .evidence-shot a,.evidence-gallery .evidence-shot img{max-height:unset}}
 </style>
+  <link rel="stylesheet" href="./portfolio-media.css">
+  <script src="./portfolio-media.js" defer></script>
 </head>
-<body>
+<body class="project-readable">
 <a class="skip-link" href="#main">本文へ移動</a>
 <header class="site-header">
 <a aria-label="ポートフォリオ ホーム" class="brand" href="./index.html"><span aria-hidden="true" class="brand-mark">P.</span> HOME</a>
@@ -88,6 +90,10 @@
 </header>
 <main id="main">
 <div class="wrap project-page">
+  <div class="template-note"><span class="note-dot" aria-hidden="true">
+      </span>このポートフォリオは現在も編集中のため、不足しているページや説明があります。</div>
+    <div class="template-note"><span class="note-dot" aria-hidden="true">
+      </span>就職作品は現在開発中です。実装済みの機能と今後の拡張予定を分けて紹介しています。</div>
 <a class="back-link" href="./index.html#works">← ホームの就職作品へ</a>
 <header class="project-header matching-header">
 <p class="eyebrow">PROJECT 01 / PERSONAL DEVELOPMENT</p>
@@ -126,9 +132,9 @@
 <div class="visual-section-heading"><p class="eyebrow">01 / OVERVIEW</p><h2 id="concept-title">作品概要</h2></div>
 <div class="detail-row overview-row">
 <figure class="detail-media">
-<a aria-label="マッチングシステムの概念図を別タブで開く" href="./images/matchmaking-wide.svg" rel="noopener" target="_blank">
+<a href="./images/matchmaking-wide.svg" data-image-preview aria-haspopup="dialog" aria-label="画像をこのページで拡大">
 <img alt="2人のプレイヤーをマッチングし、1vs1対戦につなげる仕組みの概念図" height="675" loading="lazy" src="./images/matchmaking-wide.svg" width="1200"/>
-<span class="image-open">概念図を大きく見る ↗</span>
+<span class="image-open">概念図を大きく見る ＋</span>
 </a>
 </figure>
 <div class="detail-copy">
@@ -145,7 +151,7 @@
 <p class="section-draft-note">以下には、実際のクライアント画面とGoサーバーの実行ログを掲載しています。検証済みの処理と現在調査中の課題は分けて説明しています。</p>
 <article aria-labelledby="entry-title" class="detail-row" id="entry">
 <figure class="detail-media evidence-shot">
-<a aria-label="画像を拡大表示（新しいタブ）" href="./images/server-client-login.png" rel="noopener" target="_blank">
+<a href="./images/server-client-login.png" data-image-preview aria-haspopup="dialog" aria-label="画像をこのページで拡大">
 <img alt="Goサーバーのログ。Player1・Player2の接続、AssignID送信とSyncによる初期同期を表示。" loading="lazy" src="./images/server-client-login.png"/>
 </a><figcaption><strong>接続・初期同期：</strong>2人目の接続時にAssignIDとSyncパケットを送信し、既存プレイヤーとの初期情報を交換したサーバーログ。</figcaption></figure>
 <div class="detail-copy">
@@ -160,7 +166,7 @@
 </article>
 <article aria-labelledby="waiting-title" class="detail-row" id="waiting">
 <figure class="detail-media evidence-shot">
-<a aria-label="画像を拡大表示（新しいタブ）" href="./images/server-rating-match.png" rel="noopener" target="_blank">
+<a href="./images/server-rating-match.png" data-image-preview aria-haspopup="dialog" aria-label="画像をこのページで拡大">
 <img alt="GoサーバーでPlayer1とPlayer2のレート1500のマッチング要求を受け、Success Room1 Host1 Guest2が出ているログ。" loading="lazy" src="./images/server-rating-match.png"/>
 </a><figcaption><strong>レートマッチング：</strong>両プレイヤーからRating 1500の要求を受信し、Room 1でマッチングが成立。</figcaption></figure>
 <div class="detail-copy">
@@ -175,7 +181,7 @@
 </article>
 <article aria-labelledby="matched-title" class="detail-row" id="matched">
 <figure class="detail-media evidence-shot">
-<a aria-label="画像を拡大表示（新しいタブ）" href="./images/client-match-start.png" rel="noopener" target="_blank">
+<a href="./images/client-match-start.png" data-image-preview aria-haspopup="dialog" aria-label="画像をこのページで拡大">
 <img alt="2つのC++ゲームクライアントが起動した画面。マッチング成立後、Host/GuestとRoom IDが表示され、両プレイヤーがゲーム画面にいる。" loading="lazy" src="./images/client-match-start.png"/>
 </a><figcaption><strong>マッチング成立：</strong>2つのクライアントで同じRoom IDとHost・Guest情報を共有。左のデバッグUIにMatched、RoomId 1、HostId 1、GuestId 2を表示。</figcaption></figure>
 <div class="detail-copy">
@@ -187,10 +193,10 @@
 <div><dt>参加者の紐づけ</dt><dd>プレイヤーが所属するRoomを管理し、切断時の後処理にも利用します。</dd></div>
 </dl>
 </div>
-</article><div class="evidence-support"><p class="gallery-label">サーバー側の成立・開始処理</p><div class="evidence-gallery"><figure class="evidence-shot"><a href="./images/server-game-start.png" rel="noopener" target="_blank"><img alt="マッチング成立後、Player1とPlayer2がReadyとなりGameStartが両プレイヤーへ送られたGoサーバーログ。" loading="lazy" src="./images/server-game-start.png"/></a><figcaption><strong>GameReady → GameStart：</strong>サーバーが双方のReadyを受信してからGameStartを通知するログ。</figcaption></figure></div></div>
+</article><div class="evidence-support"><p class="gallery-label">サーバー側の成立・開始処理</p><div class="evidence-gallery"><figure class="evidence-shot"><a href="./images/server-game-start.png" data-image-preview aria-haspopup="dialog" aria-label="画像をこのページで拡大"><img alt="マッチング成立後、Player1とPlayer2がReadyとなりGameStartが両プレイヤーへ送られたGoサーバーログ。" loading="lazy" src="./images/server-game-start.png"/></a><figcaption><strong>GameReady → GameStart：</strong>サーバーが双方のReadyを受信してからGameStartを通知するログ。</figcaption></figure></div></div>
 <article aria-labelledby="logs-title" class="detail-row" id="logs">
 <figure class="detail-media evidence-shot">
-<a aria-label="画像を拡大表示（新しいタブ）" href="./images/client-udp-sync.png" rel="noopener" target="_blank">
+<a href="./images/client-udp-sync.png" data-image-preview aria-haspopup="dialog" aria-label="画像をこのページで拡大">
 <img alt="2クライアント間の位置同期を示すゲーム画面。各クライアントに自分と対戦相手のキャラクターが描画され、ネットワークデバッグ欄に2人の位置情報がある。" loading="lazy" src="./images/client-udp-sync.png"/>
 </a><figcaption><strong>UDP位置同期：</strong>2つのゲーム画面で相手プレイヤーが表示され、Network DebugにIDと座標が反映されている。</figcaption></figure>
 <div class="detail-copy">
@@ -202,7 +208,7 @@
 <div><dt>既知の課題</dt><dd>Room解散時の一部挙動に不具合があり、状態更新と画面遷移を含めて修正・再検証しています。</dd></div>
 </dl>
 </div>
-</article><div class="evidence-support"><p class="gallery-label">切断検知とRoom解散のログ</p><div class="evidence-gallery"><figure class="evidence-shot"><a href="./images/server-room-closed.png" rel="noopener" target="_blank"><img alt="サーバーログ。Player2 disconnect、Room1 closed、RoomClosed Sent Player1が表示されている。" loading="lazy" src="./images/server-room-closed.png"/></a><figcaption><strong>切断処理：</strong>Player2切断後にRoom 1を解散し、Player1へRoomClosedを送信したログ。</figcaption></figure></div></div>
+</article><div class="evidence-support"><p class="gallery-label">切断検知とRoom解散のログ</p><div class="evidence-gallery"><figure class="evidence-shot"><a href="./images/server-room-closed.png" data-image-preview aria-haspopup="dialog" aria-label="画像をこのページで拡大"><img alt="サーバーログ。Player2 disconnect、Room1 closed、RoomClosed Sent Player1が表示されている。" loading="lazy" src="./images/server-room-closed.png"/></a><figcaption><strong>切断処理：</strong>Player2切断後にRoom 1を解散し、Player1へRoomClosedを送信したログ。</figcaption></figure></div></div>
 <article aria-labelledby="data-title" class="detail-row" id="data">
 <div class="detail-media implementation-note" role="note">
 <h4>未実装の機能</h4>
@@ -221,7 +227,7 @@
 </article>
 <article aria-labelledby="environment-title" class="detail-row" id="environment">
 <figure class="detail-media evidence-shot">
-<a aria-label="画像を拡大表示（新しいタブ）" href="./images/server-docker-start.png" rel="noopener" target="_blank">
+<a href="./images/server-docker-start.png" data-image-preview aria-haspopup="dialog" aria-label="画像をこのページで拡大">
 <img alt="Docker ComposeでGoサーバーを起動したターミナル。UDP Server Start Port5001とTCP Server Start Port5000、プレイヤー接続のログが表示されている。" loading="lazy" src="./images/server-docker-start.png"/>
 </a><figcaption><strong>Dockerでの実行：</strong>ComposeでGoサーバーを起動し、TCP 5000 / UDP 5001の待ち受けと接続・同期処理を確認。</figcaption></figure>
 <div class="detail-copy">
@@ -238,7 +244,7 @@
 <section aria-labelledby="architecture-title" class="visual-section" id="architecture">
 <div class="visual-section-heading"><p class="eyebrow">03 / ARCHITECTURE</p><h2 id="architecture-title">システム構成</h2></div>
 <figure class="architecture-image">
-<a aria-label="システム構成図を拡大（新しいタブ）" href="./images/system-architecture.svg" rel="noopener" target="_blank">
+<a href="./images/system-architecture.svg" data-image-preview aria-haspopup="dialog" aria-label="画像をこのページで拡大">
 <img alt="Windows上のC++/DirectX11クライアント2台がTCP 5000、UDP 5001でWSL2 UbuntuとDocker内のGoゲームサーバーへ接続するシステム構成図。PostgreSQLは今後の予定として破線で区別。" loading="lazy" src="./images/system-architecture.svg"/>
 </a>
 <figcaption>実装済みの構成と、将来追加するデータベースを区別して図示。TCPとUDPはいずれも各クライアントとGoサーバーの間で利用しています。</figcaption>

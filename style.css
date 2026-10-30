@@ -292,3 +292,52 @@ summary { cursor: pointer; color: var(--accent); font-weight: 600; padding-block
 .reflection-body p + p { margin-top: 14px; }
 .project-facts-only { display: block; }
 .project-facts-only .project-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 0 36px; }
+
+/* トップ・チーム制作ページの文字サイズ。project.htmlの設定はそのまま。 */
+body:not(.project-readable) { font-size: 17px; }
+body:not(.project-readable) .hero h1 { font-size: 3.15rem; }
+body:not(.project-readable) h2 { font-size: clamp(1.75rem, 3vw, 2.3rem); }
+body:not(.project-readable) .project-header h1 { font-size: clamp(2.15rem, 4.4vw, 3.45rem); }
+body:not(.project-readable) .featured-copy h3,
+body:not(.project-readable) .visual-feature .featured-copy h3 { font-size: 1.65rem; }
+body:not(.project-readable) .about-name { font-size: 1.65rem; }
+body:not(.project-readable) .tool-item h3 { font-size: 1.3rem; }
+body:not(.project-readable) .team-work-copy h2 { font-size: 1.55rem; }
+body:not(.project-readable) .hero-description,
+body:not(.project-readable) .featured-copy > p:not(.eyebrow),
+body:not(.project-readable) .visual-feature .featured-copy > div > p:not(.eyebrow),
+body:not(.project-readable) .about-section > div > p:not(.eyebrow),
+body:not(.project-readable) .team-work-summary,
+body:not(.project-readable) .team-challenge p { font-size: 1rem; }
+body:not(.project-readable) #site-nav a,
+body:not(.project-readable) .hero-index a,
+body:not(.project-readable) .button,
+body:not(.project-readable) .text-link,
+body:not(.project-readable) .project-meta,
+body:not(.project-readable) .team-facts,
+body:not(.project-readable) .team-challenge h4,
+body:not(.project-readable) .tool-item > p:last-child,
+body:not(.project-readable) .contact-inner p,
+body:not(.project-readable) .section-heading > p,
+body:not(.project-readable) .muted,
+body:not(.project-readable) .back-link { font-size: .95rem; }
+body:not(.project-readable) .brand,
+body:not(.project-readable) .hero-name span,
+body:not(.project-readable) .project-tech-tags li,
+body:not(.project-readable) .team-page-note,
+body:not(.project-readable) .carousel-slide figcaption,
+body:not(.project-readable) .carousel-count { font-size: .9rem; }
+body:not(.project-readable) .eyebrow,
+body:not(.project-readable) .image-caption,
+body:not(.project-readable) .tool-state,
+body:not(.project-readable) .about-name span,
+body:not(.project-readable) .contact-address .contact-note,
+body:not(.project-readable) .template-note { font-size: .85rem; }
+body:not(.project-readable) .tool-category,
+body:not(.project-readable) .hero-index a span:first-child,
+body:not(.project-readable) .site-footer { font-size: .8rem; }
+body:not(.project-readable) .contact-address > p:first-child { font-size: 1.2rem; }
+
+/* 横長のロゴは縦横比を保って表示します。 */
+.tool-logo img[src$="/sourcetree.svg"],
+.tool-logo img[src$="/directx11.svg"] { width: 190px; height: 100px; }
