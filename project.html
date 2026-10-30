@@ -1,135 +1,297 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>1vs1対戦におけるマッチングサービスの技術デモ（仮題） | 西岡慶太郎</title>
-  <meta name="description" content="西岡慶太郎の就職作品「1vs1対戦におけるマッチングサービスの技術デモ（仮題）」の紹介ページです。">
-  <link rel="stylesheet" href="./style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="C++・DirectX 11クライアントとGoサーバーによる1vs1オンライン対戦技術デモ。レート差マッチング、Room管理、TCP/UDP通信、切断処理の設計・実装を紹介します。" name="description"/>
+<title>1vs1対戦のマッチング・通信技術デモ | 西岡慶太郎</title>
+<link href="./style.css" rel="stylesheet"/>
+<!-- このページで追加した図解・補足表示のみのスタイル。既存のstyle.cssと併用できます。 -->
+<style>
+    .tech-overview-note { margin: 0 0 1.7rem; padding: .85rem 1rem; border-left: 3px solid #64748b; background: #f3f6fa; color: #334155; font-size: .92rem; line-height: 1.8; }
+    .tech-overview-note strong { color: #0f172a; }
+    .tech-keypoints { display: flex; flex-wrap: wrap; gap: .6rem; list-style: none; margin: 1.1rem 0 0; padding: 0; }
+    .tech-keypoints li { border: 1px solid #cbd5e1; border-radius: 999px; padding: .35rem .75rem; font-size: .84rem; background: #fff; color: #334155; }
+    .tech-diagram { width: 100%; box-sizing: border-box; margin: 0; padding: 1.4rem 1rem; border: 1px solid #dbe4ee; border-radius: 12px; background: linear-gradient(150deg, #f8fafc 5%, #edf3f8 100%); color: #152338; }
+    .tech-diagram * { box-sizing: border-box; }
+    .tech-diagram figcaption { margin-top: 1.05rem; text-align: center; font-size: .78rem; color: #536579; line-height: 1.6; }
+    .tech-diagram-title { font-size: .77rem; color: #57708c; letter-spacing: .08em; font-weight: 700; margin: 0 0 1.1rem; text-align: center; }
+    .tech-flow { display: flex; justify-content: center; align-items: stretch; gap: .55rem; flex-wrap: wrap; }
+    .tech-flow.stack { flex-direction: column; align-items: stretch; max-width: 370px; margin-inline: auto; }
+    .tech-box { flex: 1 1 115px; min-width: 0; padding: .85rem .75rem; border: 1px solid #bbcadc; background: #fff; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(27, 52, 78, .04); }
+    .tech-box.accent { border-color: #6389b3; background: #e9f2ff; }
+    .tech-box.plan { border-style: dashed; }
+    .tech-box strong { display: block; font-size: .94rem; line-height: 1.4; color: #0f2745; }
+    .tech-box small { display: block; font-size: .76rem; line-height: 1.65; margin-top: .35rem; color: #526880; }
+    .tech-arrow { align-self: center; color: #486c95; font-size: 1.4rem; font-weight: 700; flex: 0 0 auto; }
+    .tech-flow.stack .tech-arrow { text-align: center; line-height: 1; }
+    .tech-code { display: block; margin: .7rem auto 0; max-width: max-content; padding: .3rem .65rem; border-radius: 6px; background: #e2eaf3; color: #254668; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .78rem; }
+    .tech-protocols { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .tech-protocols .tech-box { text-align: left; }
+    .tech-protocols .tech-box strong { font-size: 1rem; }
+    .tech-protocols .tech-box small { margin-top: .5rem; }
+    .tech-list { margin: .9rem 0 0; padding-left: 1.2rem; line-height: 1.85; }
+    .tech-detail-inline { margin: .7rem 0; line-height: 1.85; }
+    .tech-architecture { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr); align-items: center; gap: .7rem; }
+    .tech-architecture .tech-box { overflow-wrap: anywhere; }
+    .tech-arch-lines { min-width: 0; display: flex; flex-direction: column; gap: .9rem; color: #476481; font-weight: 600; font-size: .77rem; text-align: center; }
+    .tech-arch-lines span { display: block; border-top: 2px solid #7894b2; padding-top: .38rem; }
+    .tech-arch-server { display: flex; flex-direction: column; gap: .45rem; }
+    .tech-arch-server .tech-box { padding: 1rem .6rem; }
+    .tech-arch-sub { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; }
+    .tech-arch-sub span { font-size: .73rem; background: #d8e8f8; border-radius: 5px; padding: .25rem .4rem; color: #2b527a; }
+    .tech-review-note { padding: .9rem 1rem; background: #f4f7fa; border-left: 3px solid #94a3b8; line-height: 1.8; margin-top: 1rem; }
+    .tech-terms { font-size: .84rem; line-height: 1.8; }
+    .tech-terms strong { color: #1c4168; }
+    .tech-facts-note { margin-top: 1rem; font-size: .9rem; line-height: 1.8; }
+    @media (max-width: 640px) {
+      .tech-protocols { grid-template-columns: 1fr; }
+      .tech-architecture { grid-template-columns: 1fr; gap: .7rem; }
+      .tech-arch-lines { flex-direction: row; justify-content: center; }
+      .tech-arch-lines span { flex: 1 1 40%; }
+      .tech-diagram { padding: 1.1rem .7rem; }
+      .tech-box { flex-basis: 100px; }
+    }
+  
+    /* 実画面・ログ画像の表示 */
+    .evidence-shot{margin:0;min-width:0}
+    .evidence-shot a{display:block; overflow:hidden; background:#101824; border:1px solid #d8e2eb;border-radius:10px;}
+    .evidence-shot img{display:block;width:100%;height:auto;object-fit:contain;}
+    .evidence-shot figcaption{font-size:.83rem;line-height:1.7;color:#536579;padding:.6rem .1rem 0;}
+    .evidence-shot figcaption strong{color:#254668;}
+    .evidence-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr));gap:1.2rem;margin:1.1rem 0 2rem;}
+    .evidence-gallery .evidence-shot a{height:100%;max-height:270px;}
+    .evidence-gallery .evidence-shot img{height:100%;max-height:270px;object-fit:contain;}
+    .evidence-full{margin:0 0 1.1rem;}
+    .evidence-full img{width:100%;height:auto;}
+    .architecture-image{margin:0 auto 1.6rem;max-width:1200px;}
+    .architecture-image a{display:block;border:1px solid #dde5ed;border-radius:10px;overflow:hidden;background:white;}
+    .architecture-image img{width:100%;height:auto;display:block;}
+    .architecture-image figcaption{font-size:.84rem;color:#536579;margin-top:.55rem;line-height:1.7;}
+    .architecture-summary{max-width:940px;margin:0 auto 1.6rem;line-height:1.85;}
+    .implementation-note{padding:1.1rem 1.25rem;border-left:3px solid #8c9cae;background:#f5f7fa;line-height:1.8;}
+    .implementation-note h4{margin:.1rem 0 .55rem;font-size:1.08rem;}
+    .implementation-note p{margin:.5rem 0;}
+    .gallery-label{font-size:1.05rem;font-weight:700;margin:1rem 0 .55rem;}
+    @media(max-width:720px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .evidence-shot a,.evidence-gallery .evidence-shot img{max-height:unset}}
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#main">本文へ移動</a>
-  <header class="site-header">
-    <a class="brand" href="./index.html" aria-label="ポートフォリオ ホーム"><span class="brand-mark" aria-hidden="true">P.</span> HOME</a>
-    <nav id="site-nav" aria-label="メインナビゲーション">
-      <a href="./index.html">トップページ</a>
-      <a href="./project.html" aria-current="page">就職作品</a>
-      <a href="./team.html">過去のチーム制作</a>
-    </nav>
-  </header>
-  <main id="main">
-    <div class="template-note"><span class="note-dot" aria-hidden="true"></span>このページは現在編集中です。制作情報や実装の詳細は順次追記します。</div>
-    <div class="wrap project-page">
-      <a class="back-link" href="./index.html#works">← ホームの就職作品へ</a>
-      <header class="project-header matching-header">
-        <p class="eyebrow">PROJECT 01 / 就職作品</p>
-        <p class="draft-label">仮題</p>
-        <h1>1vs1対戦における<br>マッチングサービスの技術デモ</h1>
-        <p class="project-lead">1vs1対戦の対戦相手を組み合わせるマッチングサービスを題材にした技術デモです。<br>Goによるサーバー開発と、C++・TCP/UDP・Dockerを用いた制作内容を紹介します。</p>
-        <ul class="project-tech-tags" aria-label="就職作品の主な使用技術"><li>C++</li><li>Go</li><li>TCP / UDP</li><li>Docker</li></ul>
-      </header>
-      <nav class="visual-index project-detail-index" aria-label="就職作品の目次">
-        <div class="detail-index-main"><a href="#concept">全体像</a><a href="#screenshots">機能・処理の詳細</a><a href="#architecture">構成図</a><a href="#project-notes">制作情報</a></div>
-        <div class="detail-index-items"><a href="#entry"><span>01</span> 操作画面</a><a href="#waiting"><span>02</span> 待機状態</a><a href="#matched"><span>03</span> 成立結果</a><a href="#logs"><span>04</span> 実行ログ</a><a href="#data"><span>05</span> データ管理</a><a href="#environment"><span>06</span> 実行環境</a></div>
-      </nav>
-      <section class="visual-section compact-overview" id="concept" aria-labelledby="concept-title">
-        <div class="visual-section-heading"><p class="eyebrow">01 / CONCEPT</p><h2 id="concept-title">サービスの全体像</h2></div>
-        <div class="detail-row overview-row">
-          <figure class="detail-media"><a href="./images/matchmaking-wide.svg" target="_blank" rel="noopener" aria-label="サービスの概念図の画像を大きく見る（新しいタブ）"><img src="./images/matchmaking-wide.svg" alt="2人のプレイヤーを組み合わせ、1vs1対戦につなげるサービスの概念図。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
-          <div class="detail-copy"><h3>1vs1対戦へつなぐ、<br>マッチングの仕組み。</h3><p>対戦相手を組み合わせるサービスを題材にした技術デモです。</p><p class="muted">左の画像はテーマを示す概念図です。実際の画面・処理・構成は、下の各項目で紹介予定です。</p></div>
-        </div>
-      </section>
-      <section class="visual-section feature-details" id="screenshots" aria-labelledby="screenshots-title">
-        <div class="visual-section-heading"><p class="eyebrow">02 / DETAILS</p><h2 id="screenshots-title">機能・処理ごとの詳細</h2></div>
-        <p class="section-draft-note">画像・説明を順次追加します。以下は紹介予定の項目で、実装内容に合わせて更新します。</p>
-        <!-- 詳細項目1：この article 全体をコピーして追加できます。id は重複させないでください。 -->
-        <article class="detail-row" id="entry" aria-labelledby="entry-title">
-          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
-          <figure class="detail-media"><a href="./images/demo-screen-placeholder.svg" target="_blank" rel="noopener" aria-label="受付・操作画面の画像を大きく見る（新しいタブ）"><img src="./images/demo-screen-placeholder.svg" alt="操作する画面を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
-          <div class="detail-copy">
-            <p class="detail-number">01 <span>紹介予定</span></p>
-            <h3 id="entry-title">受付・操作画面</h3>
-            <p>マッチングを始める操作と、画面に表示される情報を紹介します。</p>
-            <dl class="detail-points"><div><dt>操作の流れ</dt><dd>開始前に必要な操作、入力する情報、開始後の画面の変化を追記します。</dd></div><div><dt>実装のポイント</dt><dd>入力の確認やリクエストの送信など、自分で実装した部分を説明します。</dd></div></dl>
-          </div>
-        </article>
-        <!-- 詳細項目2：この article 全体をコピーして追加できます。id は重複させないでください。 -->
-        <article class="detail-row" id="waiting" aria-labelledby="waiting-title">
-          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
-          <figure class="detail-media"><a href="./images/matching-wait-placeholder.svg" target="_blank" rel="noopener" aria-label="マッチング待機の画像を大きく見る（新しいタブ）"><img src="./images/matching-wait-placeholder.svg" alt="待機中の画面・状態を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
-          <div class="detail-copy">
-            <p class="detail-number">02 <span>紹介予定</span></p>
-            <h3 id="waiting-title">マッチング待機</h3>
-            <p>対戦相手が決まるまでの待機状態を紹介します。</p>
-            <dl class="detail-points"><div><dt>処理の流れ</dt><dd>待機の開始から終了まで、どのように状態を管理するかを追記します。</dd></div><div><dt>工夫・確認したこと</dt><dd>待機人数やキャンセルなど、実際に対応・確認した内容を説明します。</dd></div></dl>
-          </div>
-        </article>
-        <!-- 詳細項目3：この article 全体をコピーして追加できます。id は重複させないでください。 -->
-        <article class="detail-row" id="matched" aria-labelledby="matched-title">
-          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
-          <figure class="detail-media"><a href="./images/matching-result-placeholder.svg" target="_blank" rel="noopener" aria-label="マッチング成立の画像を大きく見る（新しいタブ）"><img src="./images/matching-result-placeholder.svg" alt="組み合わせが決まった結果を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
-          <div class="detail-copy">
-            <p class="detail-number">03 <span>紹介予定</span></p>
-            <h3 id="matched-title">マッチング成立</h3>
-            <p>2人が組み合わされたことを確認できる画面を紹介します。</p>
-            <dl class="detail-points"><div><dt>組み合わせの条件</dt><dd>どの条件で対戦相手を決めるか、実際に採用したルールを追記します。</dd></div><div><dt>成立後の処理</dt><dd>両者への通知や次の画面への移動など、実装した処理と確認結果を説明します。</dd></div></dl>
-          </div>
-        </article>
-        <!-- 詳細項目4：この article 全体をコピーして追加できます。id は重複させないでください。 -->
-        <article class="detail-row" id="logs" aria-labelledby="logs-title">
-          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
-          <figure class="detail-media"><a href="./images/server-log-placeholder.svg" target="_blank" rel="noopener" aria-label="サーバーの処理・ログの画像を大きく見る（新しいタブ）"><img src="./images/server-log-placeholder.svg" alt="処理を確認できる実行ログを追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
-          <div class="detail-copy">
-            <p class="detail-number">04 <span>紹介予定</span></p>
-            <h3 id="logs-title">サーバーの処理・ログ</h3>
-            <p>Goで開発しているサーバーについて、画面の操作に応じた処理を実行ログとともに紹介します。</p>
-            <dl class="detail-points"><div><dt>ログの見どころ</dt><dd>受付・待機・成立などの処理に対応する行や、注目してほしい値を追記します。</dd></div><div><dt>検証したこと</dt><dd>試した条件と結果、不具合への対応など、確認できた内容を説明します。</dd></div></dl>
-          </div>
-        </article>
-        <!-- 詳細項目5：この article 全体をコピーして追加できます。id は重複させないでください。 -->
-        <article class="detail-row" id="data" aria-labelledby="data-title">
-          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
-          <figure class="detail-media"><a href="./images/matching-data-placeholder.svg" target="_blank" rel="noopener" aria-label="データの管理の画像を大きく見る（新しいタブ）"><img src="./images/matching-data-placeholder.svg" alt="保存する情報・データの関係を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
-          <div class="detail-copy">
-            <p class="detail-number">05 <span>紹介予定</span></p>
-            <h3 id="data-title">データの管理</h3>
-            <p>データの管理方法を、図や確認画面とともに紹介する欄です。</p>
-            <dl class="detail-points"><div><dt>管理する情報</dt><dd>データベースを使う場合は、保存する情報やテーブルの関係を追記します。</dd></div><div><dt>設計の理由</dt><dd>採用した管理方法と、その構成にした理由を説明します。使用しない場合は欄を削除できます。</dd></div></dl>
-          </div>
-        </article>
-        <!-- 詳細項目6：この article 全体をコピーして追加できます。id は重複させないでください。 -->
-        <article class="detail-row" id="environment" aria-labelledby="environment-title">
-          <!-- 画像の差し替え：href と src の両方を同じ画像ファイルに変更します。 -->
-          <figure class="detail-media"><a href="./images/matching-environment-placeholder.svg" target="_blank" rel="noopener" aria-label="実行環境・動作確認の画像を大きく見る（新しいタブ）"><img src="./images/matching-environment-placeholder.svg" alt="サーバーの実行環境・確認画面を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
-          <div class="detail-copy">
-            <p class="detail-number">06 <span>紹介予定</span></p>
-            <h3 id="environment-title">実行環境・動作確認</h3>
-            <p>Dockerを含む実行環境と、動作確認の手順を紹介する欄です。</p>
-            <dl class="detail-points"><div><dt>環境の構成</dt><dd>実際に使用した環境を追記します。AWSを使用した場合は、利用したサービスと役割を説明します。</dd></div><div><dt>動作確認の結果</dt><dd>実行手順と確認した条件・結果を追記します。未検証の内容は今後の課題として記載します。</dd></div></dl>
-          </div>
-        </article>
-      </section>
-      <section class="visual-section" id="architecture" aria-labelledby="architecture-title">
-        <div class="visual-section-heading"><p class="eyebrow">03 / ARCHITECTURE</p><h2 id="architecture-title">システム構成図</h2></div>
-        <div class="detail-row overview-row">
-          <figure class="detail-media"><a href="./images/architecture-placeholder.svg" target="_blank" rel="noopener" aria-label="システム構成図の画像を大きく見る（新しいタブ）"><img src="./images/architecture-placeholder.svg" alt="実際のシステム構成図を追加するための仮画像。" width="1200" height="675" loading="lazy"><span class="image-open">画像を大きく見る ↗</span></a></figure>
-          <div class="detail-copy"><h3>採用した技術と、<br>それぞれの役割</h3><p>使用した言語・データベース・実行環境を、実際の構成に合わせて追記します。</p><p class="muted">C++・Go間の通信とTCP/UDPの用途、Dockerの構成が伝わる図を掲載予定です。</p></div>
-        </div>
-      </section>
-      <section class="project-notes" id="project-notes" aria-labelledby="project-notes-title">
-        <div><p class="eyebrow">04 / PROJECT NOTES</p><h2 id="project-notes-title">制作情報と補足</h2>
-          <dl class="project-meta"><div><dt>制作期間</dt><dd>追記予定</dd></div><div><dt>制作人数</dt><dd>追記予定</dd></div><div><dt>担当</dt><dd>追記予定</dd></div><div><dt>使用技術</dt><dd>C++ / Go / TCP・UDP / Docker</dd></div></dl>
-          <p class="muted">公開できる動画・ソースコードへのリンクは追加予定です。</p>
-        </div>
-        <div class="project-explanations">
-          <details><summary>制作の目的・テーマを選んだ理由</summary><div class="detail-content"><p>1vs1対戦におけるマッチングサービスを題材としています。テーマを選んだ理由と、この技術デモで確かめたいことを追記します。</p></div></details>
-          <details><summary>設計・実装で工夫したこと</summary><div class="detail-content"><p>対戦相手を選ぶ条件、待機中の状態、同時リクエストへの対応など、実際に実装した内容に合わせて説明します。</p></div></details>
-          <details><summary>検証結果・学び・今後の改善</summary><div class="detail-content"><p>検証した環境・条件・結果と、残っている課題を追記します。測定値を掲載する場合は、測定条件も添えます。</p></div></details>
-        </div>
-      </section>
-      <div class="page-actions"><a class="button" href="./index.html#works">← ホームの就職作品へ戻る</a></div>
-    </div>
-  </main>
-  <footer class="site-footer wrap"><span>西岡慶太郎 / PORTFOLIO</span><div class="footer-links"><a href="./team.html">過去のチーム制作</a><a href="#main">ページ上部へ ↑</a></div></footer>
+<a class="skip-link" href="#main">本文へ移動</a>
+<header class="site-header">
+<a aria-label="ポートフォリオ ホーム" class="brand" href="./index.html"><span aria-hidden="true" class="brand-mark">P.</span> HOME</a>
+<nav aria-label="メインナビゲーション" id="site-nav">
+<a href="./index.html">トップページ</a>
+<a aria-current="page" href="./project.html">就職作品</a>
+<a href="./team.html">過去のチーム制作</a>
+</nav>
+</header>
+<main id="main">
+<div class="wrap project-page">
+<a class="back-link" href="./index.html#works">← ホームの就職作品へ</a>
+<header class="project-header matching-header">
+<p class="eyebrow">PROJECT 01 / PERSONAL DEVELOPMENT</p>
+<p class="draft-label">個人制作・開発中</p>
+<h1>1vs1対戦を支える<br/>マッチング・通信技術デモ</h1>
+<p class="project-lead">C++・DirectX 11のゲームクライアントと、Goによるゲームサーバーを個人で開発しています。<br/>レート差によるマッチングから対戦用Roomの管理、TCP・UDPを用いた位置同期まで、オンライン対戦の基盤となる処理を実装しました。</p>
+<ul aria-label="主な使用技術" class="project-tech-tags">
+<li>C++</li><li>DirectX 11</li><li>Go</li><li>TCP / UDP</li><li>Docker</li>
+</ul>
+</header>
+<div class="tech-overview-note">
+<strong>開発状況について</strong>：本作品は現在も開発中です。本ページでは実装済みの機能と今後の拡張予定を区別して紹介しています。切断時のRoom解散処理については、既知の不具合の修正・検証を継続しています。
+      </div>
+<nav aria-label="就職作品の目次" class="project-toc">
+<p class="toc-label">このページの目次</p>
+<ul class="toc-sections">
+<li><a href="#concept">作品概要</a></li>
+<li class="toc-details"><a href="#screenshots">実装内容</a>
+<ol>
+<li><a href="#entry"><span>01</span>クライアント</a></li>
+<li><a href="#waiting"><span>02</span>レート差マッチング</a></li>
+<li><a href="#matched"><span>03</span>Room管理</a></li>
+<li><a href="#logs"><span>04</span>TCP・UDPと切断処理</a></li>
+<li><a href="#data"><span>05</span>レート保存（実装予定）</a></li>
+<li><a href="#environment"><span>06</span>開発環境</a></li>
+</ol>
+</li>
+<li><a href="#architecture">システム構成</a></li>
+<li class="toc-reflection"><a href="#reflection">目的・工夫・振り返り</a>
+<ul><li><a href="#purpose">制作の目的</a></li><li><a href="#design">設計上の工夫</a></li><li><a href="#review">検証・今後の課題</a></li></ul>
+</li>
+<li><a href="#project-notes">制作情報</a></li>
+</ul>
+</nav>
+<section aria-labelledby="concept-title" class="visual-section compact-overview" id="concept">
+<div class="visual-section-heading"><p class="eyebrow">01 / OVERVIEW</p><h2 id="concept-title">作品概要</h2></div>
+<div class="detail-row overview-row">
+<figure class="detail-media">
+<a aria-label="マッチングシステムの概念図を別タブで開く" href="./images/matchmaking-wide.svg" rel="noopener" target="_blank">
+<img alt="2人のプレイヤーをマッチングし、1vs1対戦につなげる仕組みの概念図" height="675" loading="lazy" src="./images/matchmaking-wide.svg" width="1200"/>
+<span class="image-open">概念図を大きく見る ↗</span>
+</a>
+</figure>
+<div class="detail-copy">
+<h3>ゲームの面白さを、<br/>サーバー側から支える。</h3>
+<p>本作品は、オンライン対戦に必要な仕組みを学び、実装するための技術デモです。サーバーが対戦相手を決定し、成立した2人をRoomに割り当て、対戦中の通信を管理します。</p>
+<p>ゲームの描画よりも、<strong>マッチングの判定、Room管理、通信方式の使い分け、切断時の状態管理</strong>を主な制作テーマにしています。</p>
+<ul class="tech-keypoints"><li>個人でクライアント・サーバーを制作</li><li>レート差マッチング</li><li>Room単位の通信</li><li>切断時の後処理</li></ul>
+<p class="muted">概念図は作品のテーマを示すイメージです。実装内容の各項目には、実際のゲーム画面やサーバーログを掲載しています。</p>
+</div>
+</div>
+</section>
+<section aria-labelledby="screenshots-title" class="visual-section feature-details" id="screenshots">
+<div class="visual-section-heading"><p class="eyebrow">02 / IMPLEMENTATION</p><h2 id="screenshots-title">実装した機能と処理</h2></div>
+<p class="section-draft-note">以下には、実際のクライアント画面とGoサーバーの実行ログを掲載しています。検証済みの処理と現在調査中の課題は分けて説明しています。</p>
+<article aria-labelledby="entry-title" class="detail-row" id="entry">
+<figure class="detail-media evidence-shot">
+<a aria-label="画像を拡大表示（新しいタブ）" href="./images/server-client-login.png" rel="noopener" target="_blank">
+<img alt="Goサーバーのログ。Player1・Player2の接続、AssignID送信とSyncによる初期同期を表示。" loading="lazy" src="./images/server-client-login.png"/>
+</a><figcaption><strong>接続・初期同期：</strong>2人目の接続時にAssignIDとSyncパケットを送信し、既存プレイヤーとの初期情報を交換したサーバーログ。</figcaption></figure>
+<div class="detail-copy">
+<p class="detail-number">01 <span>実装済み</span></p>
+<h3 id="entry-title">C++・DirectX 11クライアント</h3>
+<p>プレイヤーの操作、3D描画、シーン遷移、サーバーとの通信を行うクライアントをC++で開発しました。Goサーバーと接続し、マッチング状況や対戦相手の位置を画面に反映します。</p>
+<dl class="detail-points">
+<div><dt>画面と操作</dt><dd>DirectX 11による描画に加え、ImGuiでマッチング状態やRoom情報を確認できます。</dd></div>
+<div><dt>受信処理</dt><dd>通信スレッドで受け取ったイベントをキューなどで管理し、ゲーム更新処理で反映する構成にしています。</dd></div>
+</dl>
+</div>
+</article>
+<article aria-labelledby="waiting-title" class="detail-row" id="waiting">
+<figure class="detail-media evidence-shot">
+<a aria-label="画像を拡大表示（新しいタブ）" href="./images/server-rating-match.png" rel="noopener" target="_blank">
+<img alt="GoサーバーでPlayer1とPlayer2のレート1500のマッチング要求を受け、Success Room1 Host1 Guest2が出ているログ。" loading="lazy" src="./images/server-rating-match.png"/>
+</a><figcaption><strong>レートマッチング：</strong>両プレイヤーからRating 1500の要求を受信し、Room 1でマッチングが成立。</figcaption></figure>
+<div class="detail-copy">
+<p class="detail-number">02 <span>実装済み</span></p>
+<h3 id="waiting-title">レート差によるマッチング</h3>
+<p>プレイヤーから送られたレートを基に、サーバー側で対戦相手を探索します。レート差を条件として判定することで、対戦相手の決定をクライアント任せにしない設計にしています。</p>
+<dl class="detail-points">
+<div><dt>状態管理</dt><dd>待機中・マッチング成立などの状態を管理し、成立結果を両クライアントへ通知します。</dd></div>
+<div><dt>現在の範囲</dt><dd>レート差による相手選定は実装済みです。対戦結果に応じたレート更新・永続化は今後の実装予定です。</dd></div>
+</dl>
+</div>
+</article>
+<article aria-labelledby="matched-title" class="detail-row" id="matched">
+<figure class="detail-media evidence-shot">
+<a aria-label="画像を拡大表示（新しいタブ）" href="./images/client-match-start.png" rel="noopener" target="_blank">
+<img alt="2つのC++ゲームクライアントが起動した画面。マッチング成立後、Host/GuestとRoom IDが表示され、両プレイヤーがゲーム画面にいる。" loading="lazy" src="./images/client-match-start.png"/>
+</a><figcaption><strong>マッチング成立：</strong>2つのクライアントで同じRoom IDとHost・Guest情報を共有。左のデバッグUIにMatched、RoomId 1、HostId 1、GuestId 2を表示。</figcaption></figure>
+<div class="detail-copy">
+<p class="detail-number">03 <span>実装済み</span></p>
+<h3 id="matched-title">マッチング成立とRoom管理</h3>
+<p>マッチング成立時にRoomを生成し、Room ID、Host、Guestをサーバー側で管理します。両クライアントへ成立結果を通知し、対戦開始につなげます。</p>
+<dl class="detail-points">
+<div><dt>Room単位の通信</dt><dd>対戦中の位置情報は、同じRoomの対戦相手へ配送するようにしています。</dd></div>
+<div><dt>参加者の紐づけ</dt><dd>プレイヤーが所属するRoomを管理し、切断時の後処理にも利用します。</dd></div>
+</dl>
+</div>
+</article><div class="evidence-support"><p class="gallery-label">サーバー側の成立・開始処理</p><div class="evidence-gallery"><figure class="evidence-shot"><a href="./images/server-game-start.png" rel="noopener" target="_blank"><img alt="マッチング成立後、Player1とPlayer2がReadyとなりGameStartが両プレイヤーへ送られたGoサーバーログ。" loading="lazy" src="./images/server-game-start.png"/></a><figcaption><strong>GameReady → GameStart：</strong>サーバーが双方のReadyを受信してからGameStartを通知するログ。</figcaption></figure></div></div>
+<article aria-labelledby="logs-title" class="detail-row" id="logs">
+<figure class="detail-media evidence-shot">
+<a aria-label="画像を拡大表示（新しいタブ）" href="./images/client-udp-sync.png" rel="noopener" target="_blank">
+<img alt="2クライアント間の位置同期を示すゲーム画面。各クライアントに自分と対戦相手のキャラクターが描画され、ネットワークデバッグ欄に2人の位置情報がある。" loading="lazy" src="./images/client-udp-sync.png"/>
+</a><figcaption><strong>UDP位置同期：</strong>2つのゲーム画面で相手プレイヤーが表示され、Network DebugにIDと座標が反映されている。</figcaption></figure>
+<div class="detail-copy">
+<p class="detail-number">04 <span>実装済み・一部検証中</span></p>
+<h3 id="logs-title">TCP・UDP通信と切断処理</h3>
+<p>確実に届ける必要がある制御情報はTCP、更新頻度の高い位置・動作情報はUDPで送受信します。また、プレイヤー切断時にはRoomを解散し、残った相手へ通知する処理を実装しました。</p>
+<dl class="detail-points">
+<div><dt>通信処理の分離</dt><dd>ログインやマッチングの制御と、対戦中のリアルタイムな状態同期を役割別に分けています。</dd></div>
+<div><dt>既知の課題</dt><dd>Room解散時の一部挙動に不具合があり、状態更新と画面遷移を含めて修正・再検証しています。</dd></div>
+</dl>
+</div>
+</article><div class="evidence-support"><p class="gallery-label">切断検知とRoom解散のログ</p><div class="evidence-gallery"><figure class="evidence-shot"><a href="./images/server-room-closed.png" rel="noopener" target="_blank"><img alt="サーバーログ。Player2 disconnect、Room1 closed、RoomClosed Sent Player1が表示されている。" loading="lazy" src="./images/server-room-closed.png"/></a><figcaption><strong>切断処理：</strong>Player2切断後にRoom 1を解散し、Player1へRoomClosedを送信したログ。</figcaption></figure></div></div>
+<article aria-labelledby="data-title" class="detail-row" id="data">
+<div class="detail-media implementation-note" role="note">
+<h4>未実装の機能</h4>
+<p>対戦結果に応じたレート更新、およびPostgreSQLへのレート保存・読み込みは今後の拡張予定です。</p>
+<p>現在のレート差マッチングは動作していますが、対戦結果を永続化する仕組みはまだありません。</p>
+</div>
+<div class="detail-copy">
+<p class="detail-number">05 <span>今後の実装予定</span></p>
+<h3 id="data-title">レート更新とデータベース連携</h3>
+<p>現在のレート差マッチングを拡張し、対戦結果に応じたレート更新とPostgreSQLへの保存を予定しています。次回接続時にもレートを利用できるようにし、継続的な対戦体験につなげることが目標です。</p>
+<dl class="detail-points">
+<div><dt>追加予定の機能</dt><dd>レート計算、プレイヤーを識別するデータの保存、レートの読み込み。</dd></div>
+<div><dt>実装状況</dt><dd>レートの永続化およびPostgreSQL連携は未実装です。現在の作品には含まれていません。</dd></div>
+</dl>
+</div>
+</article>
+<article aria-labelledby="environment-title" class="detail-row" id="environment">
+<figure class="detail-media evidence-shot">
+<a aria-label="画像を拡大表示（新しいタブ）" href="./images/server-docker-start.png" rel="noopener" target="_blank">
+<img alt="Docker ComposeでGoサーバーを起動したターミナル。UDP Server Start Port5001とTCP Server Start Port5000、プレイヤー接続のログが表示されている。" loading="lazy" src="./images/server-docker-start.png"/>
+</a><figcaption><strong>Dockerでの実行：</strong>ComposeでGoサーバーを起動し、TCP 5000 / UDP 5001の待ち受けと接続・同期処理を確認。</figcaption></figure>
+<div class="detail-copy">
+<p class="detail-number">06 <span>使用中</span></p>
+<h3 id="environment-title">開発環境・動作確認</h3>
+<p>Windows上のVisual Studio 2022でC++クライアントを開発し、WSL2・Ubuntu 22.04とDockerを使用してGoサーバーの実行環境を構築しています。</p>
+<dl class="detail-points">
+<div><dt>環境構築</dt><dd>Dockerを活用し、サーバーのビルド・起動を行う開発環境を用意しました。</dd></div>
+<div><dt>動作確認</dt><dd>接続、マッチング、Room生成、位置同期などを確認しています。切断後の状態管理は継続して検証中です。</dd></div>
+</dl>
+</div>
+</article>
+</section>
+<section aria-labelledby="architecture-title" class="visual-section" id="architecture">
+<div class="visual-section-heading"><p class="eyebrow">03 / ARCHITECTURE</p><h2 id="architecture-title">システム構成</h2></div>
+<figure class="architecture-image">
+<a aria-label="システム構成図を拡大（新しいタブ）" href="./images/system-architecture.svg" rel="noopener" target="_blank">
+<img alt="Windows上のC++/DirectX11クライアント2台がTCP 5000、UDP 5001でWSL2 UbuntuとDocker内のGoゲームサーバーへ接続するシステム構成図。PostgreSQLは今後の予定として破線で区別。" loading="lazy" src="./images/system-architecture.svg"/>
+</a>
+<figcaption>実装済みの構成と、将来追加するデータベースを区別して図示。TCPとUDPはいずれも各クライアントとGoサーバーの間で利用しています。</figcaption>
+</figure>
+<div class="architecture-summary">
+<p>ゲームクライアントはWindows上のC++・DirectX 11で制作し、プレイヤーの操作・描画と受信した状態の反映を担います。GoサーバーはWSL2・Ubuntu 22.04上のDockerコンテナで動作し、接続管理・レート差マッチング・Room管理・状態の配送を担当します。</p>
+<p><strong>TCP（5000）：</strong>ログイン、マッチング要求、成立・Room制御、ゲーム開始通知。<br/><strong>UDP（5001）：</strong>位置・向き・動作などのリアルタイム同期。</p>
+<p class="muted">PostgreSQLは導入予定で、現在稼働している構成には含まれていません。AWSやTLS、Nginxなども本作品の現行環境には含めていません。</p>
+</div>
+</section>
+<section aria-labelledby="reflection-title" class="project-reflection" id="reflection">
+<header class="reflection-heading"><p class="eyebrow">04 / PURPOSE, DESIGN &amp; REVIEW</p><h2 id="reflection-title">制作の目的・工夫・振り返り</h2></header>
+<section aria-labelledby="purpose-title" class="reflection-item" id="purpose">
+<div class="reflection-item-heading"><p class="reflection-number">01</p><h3 id="purpose-title">制作の目的・テーマを選んだ理由</h3></div>
+<div class="reflection-body">
+<p>ゲームの楽しさはグラフィックスや操作感だけではなく、対戦相手との出会い方や通信の安定性によっても左右されると考えています。そこで、サーバー側の仕組みがプレイヤー体験にどのようにつながるかを学ぶため、1vs1対戦のマッチングシステムを制作テーマにしました。</p>
+<p>クライアントとサーバーの双方を個人で実装することで、画面上の挙動とサーバー内部の処理を結びつけて理解することを目指しています。</p>
+</div>
+</section>
+<section aria-labelledby="design-title" class="reflection-item" id="design">
+<div class="reflection-item-heading"><p class="reflection-number">02</p><h3 id="design-title">設計・実装で工夫したこと</h3></div>
+<div class="reflection-body">
+<p><strong>通信方式の使い分け：</strong>確実な到達を重視する制御情報にはTCP、継続的に更新する位置情報にはUDPを採用しました。</p>
+<p><strong>Roomを中心とした状態管理：</strong>マッチング成立後の2人をRoomに紐づけ、対戦相手に限定した位置情報の配送と、切断後の後処理を実装しています。</p>
+<p><strong>受信イベントの整理：</strong>クライアントでは通信処理とゲーム更新処理を分離し、受信イベントをキューなどを介して反映させています。</p>
+<p>正常にマッチングできる場合だけでなく、切断によって対戦を継続できなくなった場合も想定した設計を重視しました。</p>
+</div>
+</section>
+<section aria-labelledby="review-title" class="reflection-item" id="review">
+<div class="reflection-item-heading"><p class="reflection-number">03</p><h3 id="review-title">検証結果・学び・今後の改善</h3></div>
+<div class="reflection-body">
+<p>2クライアントによる接続やレート差マッチング、Room生成、UDPでの位置同期などの処理を動作確認してきました。サーバーのログとクライアントの状態表示を照らし合わせることで、処理の順序や状態遷移が不具合の原因になりうることを学びました。</p>
+<p><strong>現在の課題：</strong>切断時のRoom解散と相手への通知は実装していますが、Room解散後の一部挙動に不具合が残っています。状態の初期化や画面遷移を含め、再現条件の整理と修正・再確認を進めています。</p>
+<p><strong>今後の拡張：</strong>対戦結果に応じたレート更新、PostgreSQLによるデータ永続化、デバッグ表示の充実に取り組む予定です。</p>
+<div class="tech-review-note">本ページでは、実際のスクリーンショットとサーバーログをもとに確認できる動作を紹介しています。未実装のデータベース連携は予定として明示しています。</div>
+</div>
+</section>
+</section>
+<section aria-labelledby="project-notes-title" class="project-notes project-facts-only" id="project-notes">
+<div>
+<p class="eyebrow">05 / PROJECT NOTES</p><h2 id="project-notes-title">制作情報</h2>
+<dl class="project-meta">
+<div><dt>制作期間</dt><dd>2026年5月〜現在（開発中）</dd></div>
+<div><dt>制作形態</dt><dd>個人制作（1人）</dd></div>
+<div><dt>担当範囲</dt><dd>クライアント・サーバーの設計、実装、動作検証</dd></div>
+<div><dt>使用技術</dt><dd>C++ / DirectX 11 / Go / TCP・UDP / Docker / WSL2 / Ubuntu 22.04</dd></div>
+</dl>
+<p class="muted tech-facts-note">動作画面・ログ：2026年10月30日時点。切断後の一部状態遷移は継続して検証中です。</p>
+</div>
+</section>
+<div class="page-actions"><a class="button" href="./index.html#works">← ホームの就職作品へ戻る</a></div>
+</div>
+</main>
+<footer class="site-footer wrap"><span>西岡慶太郎 / PORTFOLIO</span><div class="footer-links"><a href="./team.html">過去のチーム制作</a><a href="#main">ページ上部へ ↑</a></div></footer>
 </body>
 </html>

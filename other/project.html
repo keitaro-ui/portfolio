@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="C++・DirectX 11クライアントとGoサーバーによる1vs1オンライン対戦技術デモ。レート差マッチング、Room管理、TCP/UDP通信、切断処理の設計・実装を紹介します。">
+  <title>1vs1対戦のマッチング・通信技術デモ | 西岡慶太郎</title>
+  <link rel="stylesheet" href="./style.css">
+  <!-- このページで追加した図解・補足表示のみのスタイル。既存のstyle.cssと併用できます。 -->
+  <style>
+    .tech-overview-note { margin: 0 0 1.7rem; padding: .85rem 1rem; border-left: 3px solid #64748b; background: #f3f6fa; color: #334155; font-size: .92rem; line-height: 1.8; }
+    .tech-overview-note strong { color: #0f172a; }
+    .tech-keypoints { display: flex; flex-wrap: wrap; gap: .6rem; list-style: none; margin: 1.1rem 0 0; padding: 0; }
+    .tech-keypoints li { border: 1px solid #cbd5e1; border-radius: 999px; padding: .35rem .75rem; font-size: .84rem; background: #fff; color: #334155; }
+    .tech-diagram { width: 100%; box-sizing: border-box; margin: 0; padding: 1.4rem 1rem; border: 1px solid #dbe4ee; border-radius: 12px; background: linear-gradient(150deg, #f8fafc 5%, #edf3f8 100%); color: #152338; }
+    .tech-diagram * { box-sizing: border-box; }
+    .tech-diagram figcaption { margin-top: 1.05rem; text-align: center; font-size: .78rem; color: #536579; line-height: 1.6; }
+    .tech-diagram-title { font-size: .77rem; color: #57708c; letter-spacing: .08em; font-weight: 700; margin: 0 0 1.1rem; text-align: center; }
+    .tech-flow { display: flex; justify-content: center; align-items: stretch; gap: .55rem; flex-wrap: wrap; }
+    .tech-flow.stack { flex-direction: column; align-items: stretch; max-width: 370px; margin-inline: auto; }
+    .tech-box { flex: 1 1 115px; min-width: 0; padding: .85rem .75rem; border: 1px solid #bbcadc; background: #fff; border-radius: 10px; text-align: center; box-shadow: 0 2px 5px rgba(27, 52, 78, .04); }
+    .tech-box.accent { border-color: #6389b3; background: #e9f2ff; }
+    .tech-box.plan { border-style: dashed; }
+    .tech-box strong { display: block; font-size: .94rem; line-height: 1.4; color: #0f2745; }
+    .tech-box small { display: block; font-size: .76rem; line-height: 1.65; margin-top: .35rem; color: #526880; }
+    .tech-arrow { align-self: center; color: #486c95; font-size: 1.4rem; font-weight: 700; flex: 0 0 auto; }
+    .tech-flow.stack .tech-arrow { text-align: center; line-height: 1; }
+    .tech-code { display: block; margin: .7rem auto 0; max-width: max-content; padding: .3rem .65rem; border-radius: 6px; background: #e2eaf3; color: #254668; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .78rem; }
+    .tech-protocols { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .tech-protocols .tech-box { text-align: left; }
+    .tech-protocols .tech-box strong { font-size: 1rem; }
+    .tech-protocols .tech-box small { margin-top: .5rem; }
+    .tech-list { margin: .9rem 0 0; padding-left: 1.2rem; line-height: 1.85; }
+    .tech-detail-inline { margin: .7rem 0; line-height: 1.85; }
+    .tech-architecture { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr); align-items: center; gap: .7rem; }
+    .tech-architecture .tech-box { overflow-wrap: anywhere; }
+    .tech-arch-lines { min-width: 0; display: flex; flex-direction: column; gap: .9rem; color: #476481; font-weight: 600; font-size: .77rem; text-align: center; }
+    .tech-arch-lines span { display: block; border-top: 2px solid #7894b2; padding-top: .38rem; }
+    .tech-arch-server { display: flex; flex-direction: column; gap: .45rem; }
+    .tech-arch-server .tech-box { padding: 1rem .6rem; }
+    .tech-arch-sub { display: flex; flex-wrap: wrap; gap: .4rem; justify-content: center; }
+    .tech-arch-sub span { font-size: .73rem; background: #d8e8f8; border-radius: 5px; padding: .25rem .4rem; color: #2b527a; }
+    .tech-review-note { padding: .9rem 1rem; background: #f4f7fa; border-left: 3px solid #94a3b8; line-height: 1.8; margin-top: 1rem; }
+    .tech-terms { font-size: .84rem; line-height: 1.8; }
+    .tech-terms strong { color: #1c4168; }
+    .tech-facts-note { margin-top: 1rem; font-size: .9rem; line-height: 1.8; }
+    @media (max-width: 640px) {
+      .tech-protocols { grid-template-columns: 1fr; }
+      .tech-architecture { grid-template-columns: 1fr; gap: .7rem; }
+      .tech-arch-lines { flex-direction: row; justify-content: center; }
+      .tech-arch-lines span { flex: 1 1 40%; }
+      .tech-diagram { padding: 1.1rem .7rem; }
+      .tech-box { flex-basis: 100px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">本文へ移動</a>
+  <header class="site-header">
+    <a class="brand" href="./index.html" aria-label="ポートフォリオ ホーム"><span class="brand-mark" aria-hidden="true">P.</span> HOME</a>
+    <nav id="site-nav" aria-label="メインナビゲーション">
+      <a href="./index.html">トップページ</a>
+      <a href="./project.html" aria-current="page">就職作品</a>
+      <a href="./team.html">過去のチーム制作</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div class="wrap project-page">
+      <a class="back-link" href="./index.html#works">← ホームの就職作品へ</a>
+      <header class="project-header matching-header">
+        <p class="eyebrow">PROJECT 01 / PERSONAL DEVELOPMENT</p>
+        <p class="draft-label">個人制作・開発中</p>
+        <h1>1vs1対戦を支える<br>マッチング・通信技術デモ</h1>
+        <p class="project-lead">C++・DirectX 11のゲームクライアントと、Goによるゲームサーバーを個人で開発しています。<br>レート差によるマッチングから対戦用Roomの管理、TCP・UDPを用いた位置同期まで、オンライン対戦の基盤となる処理を実装しました。</p>
+        <ul class="project-tech-tags" aria-label="主な使用技術">
+          <li>C++</li><li>DirectX 11</li><li>Go</li><li>TCP / UDP</li><li>Docker</li>
+        </ul>
+      </header>
+
+      <div class="tech-overview-note">
+        <strong>開発状況について</strong>：本作品は現在も開発中です。本ページでは実装済みの機能と今後の拡張予定を区別して紹介しています。切断時のRoom解散処理については、既知の不具合の修正・検証を継続しています。
+      </div>
+
+      <nav class="project-toc" aria-label="就職作品の目次">
+        <p class="toc-label">このページの目次</p>
+        <ul class="toc-sections">
+          <li><a href="#concept">作品概要</a></li>
+          <li class="toc-details"><a href="#screenshots">実装内容</a>
+            <ol>
+              <li><a href="#entry"><span>01</span>クライアント</a></li>
+              <li><a href="#waiting"><span>02</span>レート差マッチング</a></li>
+              <li><a href="#matched"><span>03</span>Room管理</a></li>
+              <li><a href="#logs"><span>04</span>TCP・UDPと切断処理</a></li>
+              <li><a href="#data"><span>05</span>レート保存（実装予定）</a></li>
+              <li><a href="#environment"><span>06</span>開発環境</a></li>
+            </ol>
+          </li>
+          <li><a href="#architecture">システム構成</a></li>
+          <li class="toc-reflection"><a href="#reflection">目的・工夫・振り返り</a>
+            <ul><li><a href="#purpose">制作の目的</a></li><li><a href="#design">設計上の工夫</a></li><li><a href="#review">検証・今後の課題</a></li></ul>
+          </li>
+          <li><a href="#project-notes">制作情報</a></li>
+        </ul>
+      </nav>
+
+      <section class="visual-section compact-overview" id="concept" aria-labelledby="concept-title">
+        <div class="visual-section-heading"><p class="eyebrow">01 / OVERVIEW</p><h2 id="concept-title">作品概要</h2></div>
+        <div class="detail-row overview-row">
+          <figure class="detail-media">
+            <a href="./images/matchmaking-wide.svg" target="_blank" rel="noopener" aria-label="マッチングシステムの概念図を別タブで開く">
+              <img src="./images/matchmaking-wide.svg" width="1200" height="675" loading="lazy" alt="2人のプレイヤーをマッチングし、1vs1対戦につなげる仕組みの概念図">
+              <span class="image-open">概念図を大きく見る ↗</span>
+            </a>
+          </figure>
+          <div class="detail-copy">
+            <h3>ゲームの面白さを、<br>サーバー側から支える。</h3>
+            <p>本作品は、オンライン対戦に必要な仕組みを学び、実装するための技術デモです。サーバーが対戦相手を決定し、成立した2人をRoomに割り当て、対戦中の通信を管理します。</p>
+            <p>ゲームの描画よりも、<strong>マッチングの判定、Room管理、通信方式の使い分け、切断時の状態管理</strong>を主な制作テーマにしています。</p>
+            <ul class="tech-keypoints"><li>個人でクライアント・サーバーを制作</li><li>レート差マッチング</li><li>Room単位の通信</li><li>切断時の後処理</li></ul>
+            <p class="muted">掲載画像は処理の考え方を表した概念図です。以下の図も、実際のゲーム画面ではなく仕組みを説明するための模式図です。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="visual-section feature-details" id="screenshots" aria-labelledby="screenshots-title">
+        <div class="visual-section-heading"><p class="eyebrow">02 / IMPLEMENTATION</p><h2 id="screenshots-title">実装した機能と処理</h2></div>
+        <p class="section-draft-note">各項目では、実装内容に加えて「どのような役割で、どのように処理するか」を説明しています。図は理解を助けるための模式図であり、実際の実行ログや測定結果を再現したものではありません。</p>
+
+        <article class="detail-row" id="entry" aria-labelledby="entry-title">
+          <figure class="detail-media tech-diagram">
+            <p class="tech-diagram-title">CLIENT RESPONSIBILITIES</p>
+            <div class="tech-flow stack">
+              <div class="tech-box"><strong>操作・状態管理</strong><small>プレイヤー入力 / シーン遷移</small></div>
+              <div class="tech-arrow" aria-hidden="true">↓</div>
+              <div class="tech-box accent"><strong>C++ クライアント</strong><small>TCP・UDP送受信 / 受信イベント処理</small></div>
+              <div class="tech-arrow" aria-hidden="true">↓</div>
+              <div class="tech-box"><strong>ゲーム画面・デバッグ表示</strong><small>DirectX 11 / ImGui</small></div>
+            </div>
+            <figcaption>クライアント側の主要な役割（模式図）</figcaption>
+          </figure>
+          <div class="detail-copy">
+            <p class="detail-number">01 <span>実装済み</span></p>
+            <h3 id="entry-title">C++・DirectX 11クライアント</h3>
+            <p>プレイヤーの操作、3D描画、シーン遷移、サーバーとの通信を行うクライアントをC++で開発しました。Goサーバーと接続し、マッチング状況や対戦相手の位置を画面に反映します。</p>
+            <dl class="detail-points">
+              <div><dt>画面と操作</dt><dd>DirectX 11による描画に加え、ImGuiでマッチング状態やRoom情報を確認できます。</dd></div>
+              <div><dt>受信処理</dt><dd>通信スレッドで受け取ったイベントをキューなどで管理し、ゲーム更新処理で反映する構成にしています。</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="detail-row" id="waiting" aria-labelledby="waiting-title">
+          <figure class="detail-media tech-diagram">
+            <p class="tech-diagram-title">RATING-BASED MATCHMAKING</p>
+            <div class="tech-flow stack">
+              <div class="tech-box"><strong>マッチング要求</strong><small>プレイヤーのレートを送信</small></div>
+              <div class="tech-arrow" aria-hidden="true">↓</div>
+              <div class="tech-box accent"><strong>Goサーバーで条件判定</strong><small>レート差が許容範囲内か確認</small></div>
+              <div class="tech-arrow" aria-hidden="true">↓</div>
+              <div class="tech-box"><strong>成立 / 待機継続</strong><small>条件に合う相手がいれば2人を組み合わせる</small></div>
+            </div>
+            <figcaption>マッチング判定の流れ（模式図）</figcaption>
+          </figure>
+          <div class="detail-copy">
+            <p class="detail-number">02 <span>実装済み</span></p>
+            <h3 id="waiting-title">レート差によるマッチング</h3>
+            <p>プレイヤーから送られたレートを基に、サーバー側で対戦相手を探索します。レート差を条件として判定することで、対戦相手の決定をクライアント任せにしない設計にしています。</p>
+            <dl class="detail-points">
+              <div><dt>状態管理</dt><dd>待機中・マッチング成立などの状態を管理し、成立結果を両クライアントへ通知します。</dd></div>
+              <div><dt>現在の範囲</dt><dd>レート差による相手選定は実装済みです。対戦結果に応じたレート更新・永続化は今後の実装予定です。</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="detail-row" id="matched" aria-labelledby="matched-title">
+          <figure class="detail-media tech-diagram">
+            <p class="tech-diagram-title">ROOM MANAGEMENT</p>
+            <div class="tech-flow">
+              <div class="tech-box"><strong>Host</strong><small>プレイヤーA</small></div>
+              <div class="tech-arrow" aria-hidden="true">↔</div>
+              <div class="tech-box accent"><strong>Room</strong><small>Room ID / 参加者を管理</small></div>
+              <div class="tech-arrow" aria-hidden="true">↔</div>
+              <div class="tech-box"><strong>Guest</strong><small>プレイヤーB</small></div>
+            </div>
+            <span class="tech-code">マッチング成立 → Room生成 → 両者に通知</span>
+            <figcaption>Roomは対戦する2人をサーバー側で紐づける単位です</figcaption>
+          </figure>
+          <div class="detail-copy">
+            <p class="detail-number">03 <span>実装済み</span></p>
+            <h3 id="matched-title">マッチング成立とRoom管理</h3>
+            <p>マッチング成立時にRoomを生成し、Room ID、Host、Guestをサーバー側で管理します。両クライアントへ成立結果を通知し、対戦開始につなげます。</p>
+            <dl class="detail-points">
+              <div><dt>Room単位の通信</dt><dd>対戦中の位置情報は、同じRoomの対戦相手へ配送するようにしています。</dd></div>
+              <div><dt>参加者の紐づけ</dt><dd>プレイヤーが所属するRoomを管理し、切断時の後処理にも利用します。</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="detail-row" id="logs" aria-labelledby="logs-title">
+          <figure class="detail-media tech-diagram">
+            <p class="tech-diagram-title">NETWORK & DISCONNECT</p>
+            <div class="tech-protocols">
+              <div class="tech-box accent"><strong>TCP</strong><small>ログイン / マッチング / Room通知 / ゲーム進行制御</small></div>
+              <div class="tech-box"><strong>UDP</strong><small>プレイヤー位置 / 向き / 動作の同期</small></div>
+            </div>
+            <div class="tech-flow stack" style="margin-top: .9rem;">
+              <div class="tech-box"><strong>切断を検知</strong><small>サーバーが所属Roomを確認</small></div>
+              <div class="tech-arrow" aria-hidden="true">↓</div>
+              <div class="tech-box"><strong>Room解散・相手に通知</strong><small>切断後の状態更新へ</small></div>
+            </div>
+            <figcaption>通信方式の役割分担と切断時の処理（模式図）</figcaption>
+          </figure>
+          <div class="detail-copy">
+            <p class="detail-number">04 <span>実装済み・一部検証中</span></p>
+            <h3 id="logs-title">TCP・UDP通信と切断処理</h3>
+            <p>確実に届ける必要がある制御情報はTCP、更新頻度の高い位置・動作情報はUDPで送受信します。また、プレイヤー切断時にはRoomを解散し、残った相手へ通知する処理を実装しました。</p>
+            <dl class="detail-points">
+              <div><dt>通信処理の分離</dt><dd>ログインやマッチングの制御と、対戦中のリアルタイムな状態同期を役割別に分けています。</dd></div>
+              <div><dt>既知の課題</dt><dd>Room解散時の一部挙動に不具合があり、状態更新と画面遷移を含めて修正・再検証しています。</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="detail-row" id="data" aria-labelledby="data-title">
+          <figure class="detail-media tech-diagram">
+            <p class="tech-diagram-title">PLANNED: RATING PERSISTENCE</p>
+            <div class="tech-flow stack">
+              <div class="tech-box plan"><strong>対戦結果</strong><small>勝敗などを基にレートを更新</small></div>
+              <div class="tech-arrow" aria-hidden="true">↓</div>
+              <div class="tech-box plan accent"><strong>PostgreSQL</strong><small>プレイヤー情報・レートを保存</small></div>
+              <div class="tech-arrow" aria-hidden="true">↓</div>
+              <div class="tech-box plan"><strong>次回のマッチング</strong><small>保存したレートを読み込んで利用</small></div>
+            </div>
+            <figcaption>今後の拡張構想。図中の処理は未実装です</figcaption>
+          </figure>
+          <div class="detail-copy">
+            <p class="detail-number">05 <span>今後の実装予定</span></p>
+            <h3 id="data-title">レート更新とデータベース連携</h3>
+            <p>現在のレート差マッチングを拡張し、対戦結果に応じたレート更新とPostgreSQLへの保存を予定しています。次回接続時にもレートを利用できるようにし、継続的な対戦体験につなげることが目標です。</p>
+            <dl class="detail-points">
+              <div><dt>追加予定の機能</dt><dd>レート計算、プレイヤーを識別するデータの保存、レートの読み込み。</dd></div>
+              <div><dt>実装状況</dt><dd>レートの永続化およびPostgreSQL連携は未実装です。現在の作品には含まれていません。</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="detail-row" id="environment" aria-labelledby="environment-title">
+          <figure class="detail-media tech-diagram">
+            <p class="tech-diagram-title">DEVELOPMENT ENVIRONMENT</p>
+            <div class="tech-flow stack">
+              <div class="tech-box"><strong>Windows / Visual Studio 2022</strong><small>C++・DirectX 11クライアント開発</small></div>
+              <div class="tech-arrow" aria-hidden="true">↕</div>
+              <div class="tech-box accent"><strong>WSL2 / Ubuntu 22.04</strong><small>Goサーバーの開発環境</small></div>
+              <div class="tech-arrow" aria-hidden="true">↓</div>
+              <div class="tech-box"><strong>Docker</strong><small>Goサーバーのコンテナ化・起動</small></div>
+            </div>
+            <figcaption>開発時の環境構成（模式図）</figcaption>
+          </figure>
+          <div class="detail-copy">
+            <p class="detail-number">06 <span>使用中</span></p>
+            <h3 id="environment-title">開発環境・動作確認</h3>
+            <p>Windows上のVisual Studio 2022でC++クライアントを開発し、WSL2・Ubuntu 22.04とDockerを使用してGoサーバーの実行環境を構築しています。</p>
+            <dl class="detail-points">
+              <div><dt>環境構築</dt><dd>Dockerを活用し、サーバーのビルド・起動を行う開発環境を用意しました。</dd></div>
+              <div><dt>動作確認</dt><dd>接続、マッチング、Room生成、位置同期などを確認しています。切断後の状態管理は継続して検証中です。</dd></div>
+            </dl>
+          </div>
+        </article>
+      </section>
+
+      <section class="visual-section" id="architecture" aria-labelledby="architecture-title">
+        <div class="visual-section-heading"><p class="eyebrow">03 / ARCHITECTURE</p><h2 id="architecture-title">システム構成</h2></div>
+        <div class="detail-row overview-row">
+          <figure class="detail-media tech-diagram">
+            <p class="tech-diagram-title">CLIENT–SERVER ARCHITECTURE</p>
+            <div class="tech-architecture">
+              <div class="tech-box"><strong>クライアント A</strong><small>C++ / DirectX 11<br>操作・描画・状態反映</small></div>
+              <div class="tech-arch-server">
+                <div class="tech-arch-lines"><span>TCP（制御）</span><span>UDP（状態同期）</span></div>
+                <div class="tech-box accent"><strong>Go ゲームサーバー</strong><small>マッチング・Room・通信処理</small></div>
+                <div class="tech-arch-sub"><span>Player管理</span><span>Matchmaking</span><span>Room管理</span></div>
+              </div>
+              <div class="tech-box"><strong>クライアント B</strong><small>C++ / DirectX 11<br>操作・描画・状態反映</small></div>
+            </div>
+            <figcaption>両クライアントはGoサーバーと通信します。図は論理的な構成を示しています</figcaption>
+          </figure>
+          <div class="detail-copy">
+            <h3>対戦の判定と状態管理は、<br>サーバー側で。</h3>
+            <p>クライアントは操作入力・描画を担い、サーバーはプレイヤー接続、対戦相手の選定、Room所属情報を管理します。ゲームの進行を制御するTCPと、リアルタイム性を重視したUDPを用途別に利用しています。</p>
+            <p class="tech-terms"><strong>TCP：</strong>ログイン・マッチング・Room関連通知など<br><strong>UDP：</strong>位置・向き・ジャンプなどの状態同期</p>
+            <p class="muted">データベースは将来追加予定のため、上記の実装済み構成図には含めていません。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="project-reflection" id="reflection" aria-labelledby="reflection-title">
+        <header class="reflection-heading"><p class="eyebrow">04 / PURPOSE, DESIGN &amp; REVIEW</p><h2 id="reflection-title">制作の目的・工夫・振り返り</h2></header>
+        <section class="reflection-item" id="purpose" aria-labelledby="purpose-title">
+          <div class="reflection-item-heading"><p class="reflection-number">01</p><h3 id="purpose-title">制作の目的・テーマを選んだ理由</h3></div>
+          <div class="reflection-body">
+            <p>ゲームの楽しさはグラフィックスや操作感だけではなく、対戦相手との出会い方や通信の安定性によっても左右されると考えています。そこで、サーバー側の仕組みがプレイヤー体験にどのようにつながるかを学ぶため、1vs1対戦のマッチングシステムを制作テーマにしました。</p>
+            <p>クライアントとサーバーの双方を個人で実装することで、画面上の挙動とサーバー内部の処理を結びつけて理解することを目指しています。</p>
+          </div>
+        </section>
+        <section class="reflection-item" id="design" aria-labelledby="design-title">
+          <div class="reflection-item-heading"><p class="reflection-number">02</p><h3 id="design-title">設計・実装で工夫したこと</h3></div>
+          <div class="reflection-body">
+            <p><strong>通信方式の使い分け：</strong>確実な到達を重視する制御情報にはTCP、継続的に更新する位置情報にはUDPを採用しました。</p>
+            <p><strong>Roomを中心とした状態管理：</strong>マッチング成立後の2人をRoomに紐づけ、対戦相手に限定した位置情報の配送と、切断後の後処理を実装しています。</p>
+            <p><strong>受信イベントの整理：</strong>クライアントでは通信処理とゲーム更新処理を分離し、受信イベントをキューなどを介して反映させています。</p>
+            <p>正常にマッチングできる場合だけでなく、切断によって対戦を継続できなくなった場合も想定した設計を重視しました。</p>
+          </div>
+        </section>
+        <section class="reflection-item" id="review" aria-labelledby="review-title">
+          <div class="reflection-item-heading"><p class="reflection-number">03</p><h3 id="review-title">検証結果・学び・今後の改善</h3></div>
+          <div class="reflection-body">
+            <p>2クライアントによる接続やレート差マッチング、Room生成、UDPでの位置同期などの処理を動作確認してきました。サーバーのログとクライアントの状態表示を照らし合わせることで、処理の順序や状態遷移が不具合の原因になりうることを学びました。</p>
+            <p><strong>現在の課題：</strong>切断時のRoom解散と相手への通知は実装していますが、Room解散後の一部挙動に不具合が残っています。状態の初期化や画面遷移を含め、再現条件の整理と修正・再確認を進めています。</p>
+            <p><strong>今後の拡張：</strong>対戦結果に応じたレート更新、PostgreSQLによるデータ永続化、デバッグ表示の充実に取り組む予定です。</p>
+            <div class="tech-review-note">本ページは<strong>実装済みの処理</strong>、<strong>検証中の項目</strong>、<strong>今後の予定</strong>を分けて掲載しています。模式図は仕組みの説明用であり、実際の実行結果を示すスクリーンショットではありません。</div>
+          </div>
+        </section>
+      </section>
+
+      <section class="project-notes project-facts-only" id="project-notes" aria-labelledby="project-notes-title">
+        <div>
+          <p class="eyebrow">05 / PROJECT NOTES</p><h2 id="project-notes-title">制作情報</h2>
+          <dl class="project-meta">
+            <div><dt>制作期間</dt><dd>2026年5月〜現在（開発中）</dd></div>
+            <div><dt>制作形態</dt><dd>個人制作（1人）</dd></div>
+            <div><dt>担当範囲</dt><dd>クライアント・サーバーの設計、実装、動作検証</dd></div>
+            <div><dt>使用技術</dt><dd>C++ / DirectX 11 / Go / TCP・UDP / Docker / WSL2 / Ubuntu 22.04</dd></div>
+          </dl>
+          <p class="muted tech-facts-note">開発状況の記録：2026年10月29日時点。公開後も、検証状況や実装内容に応じて更新します。</p>
+        </div>
+      </section>
+
+      <div class="page-actions"><a class="button" href="./index.html#works">← ホームの就職作品へ戻る</a></div>
+    </div>
+  </main>
+  <footer class="site-footer wrap"><span>西岡慶太郎 / PORTFOLIO</span><div class="footer-links"><a href="./team.html">過去のチーム制作</a><a href="#main">ページ上部へ ↑</a></div></footer>
+</body>
+</html>

@@ -245,3 +245,50 @@ summary { cursor: pointer; color: var(--accent); font-weight: 600; padding-block
 .team-facts dd { margin: 0; color: var(--muted); }
 .team-challenge h4 { margin: 0 0 6px; font-size: .85rem; color: var(--accent); }
 .team-challenge p { font-size: .82rem; color: var(--muted); }
+
+/* 作品詳細の階層付き目次と、画像を添えた進捗記録 */
+.project-toc { padding: 22px 24px; margin: 0 0 36px; background: white; border: 1px solid var(--line); }
+.toc-label { color: var(--muted); font-size: .75rem; margin-bottom: 14px; }
+.toc-sections { display: grid; grid-template-columns: 1fr 3.4fr 1fr 1fr; gap: 24px; list-style: none; padding: 0; margin: 0; }
+.toc-sections > li > a { color: var(--accent); font-size: .9rem; font-weight: 700; text-decoration: none; }
+.toc-sections a:hover { text-decoration: underline; }
+.toc-details { padding-inline: 24px; border-inline: 1px solid var(--line); }
+.toc-details ol { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; list-style: none; padding: 0; margin: 12px 0 0; }
+.toc-details ol a { display: flex; align-items: baseline; gap: 10px; font-size: .78rem; text-decoration: none; }
+.toc-details ol span { color: var(--accent); font-weight: 700; font-size: .75rem; }
+.project-page .visual-section, .project-page .detail-row, .project-page .project-notes { scroll-margin-top: 0; }
+.progress-gallery { grid-column: 1 / -1; margin-top: 0; border: 1px solid var(--line); background: white; }
+.progress-gallery > summary { padding: 12px 18px; }
+.progress-gallery > summary > span { margin-left: 18px; font-size: .75rem; font-weight: 400; color: var(--muted); }
+.progress-gallery[open] > summary { border-bottom: 1px solid var(--line); }
+.progress-entries { padding: 0 20px; }
+.progress-entry { display: grid; grid-template-columns: 1.12fr 1fr; gap: 28px; padding: 22px 0; }
+.progress-entry + .progress-entry { border-top: 1px solid var(--line); }
+.progress-image { margin: 0; background: var(--pale); border: 1px solid var(--line); align-self: start; }
+.progress-image a { display: block; text-decoration: none; }
+.progress-image img { width: 100%; height: 280px; object-fit: contain; }
+.progress-step { color: var(--muted); font-size: .7rem; margin-bottom: 5px; }
+.progress-copy h4 { font-size: 1.05rem; margin: 0 0 10px; }
+.progress-copy h5 { font-size: .8rem; color: var(--accent); margin: 12px 0 4px; }
+.progress-copy > p:not(.progress-step) { font-size: .8rem; color: var(--muted); }
+.progress-meta { display: flex; gap: 24px; margin: 0; font-size: .74rem; }
+.progress-meta > div { display: flex; gap: 8px; }
+.progress-meta dt { color: var(--muted); }
+.progress-meta dd { margin: 0; }
+
+/* 制作の目的・工夫・振り返り：本文を常時表示する独立した項目 */
+.toc-reflection { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 16px; }
+.toc-reflection ul { display: flex; flex-wrap: wrap; gap: 12px 28px; list-style: none; padding: 0; margin: 8px 0 0; }
+.toc-reflection ul a { font-size: .78rem; text-decoration: none; color: var(--muted); }
+.project-reflection { margin: 46px 0; padding: 30px 34px; background: white; border: 1px solid var(--line); border-top: 4px solid var(--accent); }
+.reflection-heading { margin-bottom: 24px; }
+.reflection-heading .eyebrow { margin-bottom: 8px; }
+.reflection-heading h2 { font-size: 1.9rem; }
+.reflection-item { display: grid; grid-template-columns: 300px 1fr; gap: 38px; padding: 26px 0; border-top: 1px solid var(--line); }
+.reflection-item:last-child { padding-bottom: 0; }
+.reflection-number { font: 1.5rem Georgia, serif; color: var(--accent); margin-bottom: 10px; }
+.reflection-item h3 { font-size: 1.16rem; line-height: 1.7; }
+.reflection-body { font-size: .92rem; line-height: 2; }
+.reflection-body p + p { margin-top: 14px; }
+.project-facts-only { display: block; }
+.project-facts-only .project-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 0 36px; }

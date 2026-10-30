@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="840" viewBox="0 0 1440 840" role="img" aria-labelledby="ttl desc">
+<title id="ttl">C++クライアント2台とGoゲームサーバーのシステム構成図</title>
+<desc id="desc">Windowsの2つのゲームクライアントがそれぞれTCP 5000番ポートで制御通信、UDP 5001番ポートで位置同期通信をWSL2 Ubuntu22.04のDocker上で稼働するGoサーバーと行う。Goサーバー内部にはプレイヤー管理、マッチング、Room管理がある。PostgreSQLは将来導入予定であり未接続。</desc>
+<defs>
+ <marker id="arr-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10Z" fill="#2563a6"/></marker>
+ <marker id="arr-teal" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10Z" fill="#16878d"/></marker>
+ <marker id="arr-dash" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10Z" fill="#858b95"/></marker>
+ <style><![CDATA[
+  text{font-family:"Noto Sans JP","Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;fill:#273242}
+  .top{font-weight:700;font-size:29px;letter-spacing:2px;fill:#1c2938}
+  .label{font-size:23px;font-weight:700;fill:#203044}
+  .small{font-size:18px;fill:#455469}
+  .tiny{font-size:16px;fill:#55677a}
+  .section{font-size:20px;font-weight:700;fill:#1e3350}
+  .caption{font-size:17px;font-weight:650}
+ ]]></style>
+</defs>
+<rect width="1440" height="840" fill="#ffffff"/>
+<text x="720" y="58" class="top" text-anchor="middle">システム構成図</text>
+<text x="720" y="91" class="tiny" text-anchor="middle">1 vs 1 オンライン対戦 / ローカル開発環境（実装済み部分）</text>
+
+<!-- 2 client boxes -->
+<text x="230" y="172" class="label" text-anchor="middle">Client A</text>
+<rect x="45" y="191" width="365" height="185" rx="2" fill="#fff" stroke="#344256" stroke-width="2.5"/>
+<text x="227" y="227" class="section" text-anchor="middle">Windows / C++</text>
+<text x="227" y="262" class="small" text-anchor="middle">DirectX 11 / WinSock2</text>
+<text x="227" y="300" class="small" text-anchor="middle">操作入力・3D描画</text>
+<text x="227" y="334" class="small" text-anchor="middle">マッチング状態・位置反映</text>
+
+<text x="230" y="457" class="label" text-anchor="middle">Client B</text>
+<rect x="45" y="475" width="365" height="185" rx="2" fill="#fff" stroke="#344256" stroke-width="2.5"/>
+<text x="227" y="512" class="section" text-anchor="middle">Windows / C++</text>
+<text x="227" y="548" class="small" text-anchor="middle">DirectX 11 / WinSock2</text>
+<text x="227" y="588" class="small" text-anchor="middle">操作入力・3D描画</text>
+<text x="227" y="622" class="small" text-anchor="middle">マッチング状態・位置反映</text>
+
+<!-- server host box -->
+<text x="1060" y="147" class="label" text-anchor="middle">Server（開発環境）</text>
+<rect x="787" y="163" width="605" height="543" rx="2" fill="#fff" stroke="#344256" stroke-width="2.5"/>
+<text x="1090" y="201" class="small" text-anchor="middle">Windows / WSL2 / Ubuntu 22.04 LTS</text>
+<rect x="824" y="223" width="530" height="414" rx="3" fill="#f8fbff" stroke="#637489" stroke-width="1.7"/>
+<text x="1089" y="253" class="section" text-anchor="middle">Docker コンテナ</text>
+<rect x="854" y="273" width="471" height="331" rx="2" fill="#fff" stroke="#344256" stroke-width="2.3"/>
+<text x="1089" y="310" class="section" text-anchor="middle">Go ゲームサーバー</text>
+<text x="1089" y="341" class="tiny" text-anchor="middle">TCP :5000 / UDP :5001</text>
+<line x1="892" y1="359" x2="1287" y2="359" stroke="#c3cfd9" stroke-width="1.4"/>
+<rect x="896" y="388" width="386" height="48" rx="2" fill="#f1f5f9" stroke="#a6b4c6"/>
+<text x="1089" y="419" class="small" text-anchor="middle">プレイヤー接続・状態管理</text>
+<rect x="896" y="451" width="386" height="48" rx="2" fill="#f1f5f9" stroke="#a6b4c6"/>
+<text x="1089" y="482" class="small" text-anchor="middle">レート差マッチング</text>
+<rect x="896" y="514" width="386" height="48" rx="2" fill="#f1f5f9" stroke="#a6b4c6"/>
+<text x="1089" y="545" class="small" text-anchor="middle">Room生成・配送・切断通知</text>
+
+<!-- bidirectional control lines left to server; lines are sent to container border -->
+<line x1="421" y1="263" x2="775" y2="263" stroke="#2563a6" stroke-width="3" marker-start="url(#arr-blue)" marker-end="url(#arr-blue)"/>
+<rect x="490" y="232" width="220" height="26" fill="#fff"/><text x="600" y="250" class="caption" text-anchor="middle" fill="#2563a6">TCP :5000 / 制御通信</text>
+<line x1="421" y1="335" x2="775" y2="335" stroke="#16878d" stroke-width="3" marker-start="url(#arr-teal)" marker-end="url(#arr-teal)"/>
+<rect x="480" y="305" width="250" height="26" fill="#fff"/><text x="605" y="323" class="caption" text-anchor="middle">UDP :5001 / 位置同期</text>
+<line x1="421" y1="525" x2="775" y2="525" stroke="#2563a6" stroke-width="3" marker-start="url(#arr-blue)" marker-end="url(#arr-blue)"/>
+<rect x="490" y="495" width="220" height="26" fill="#fff"/><text x="600" y="513" class="caption" text-anchor="middle">TCP :5000 / 制御通信</text>
+<line x1="421" y1="597" x2="775" y2="597" stroke="#16878d" stroke-width="3" marker-start="url(#arr-teal)" marker-end="url(#arr-teal)"/>
+<rect x="480" y="565" width="250" height="26" fill="#fff"/><text x="605" y="583" class="caption" text-anchor="middle">UDP :5001 / 位置同期</text>
+
+<!-- Future DB deliberately outside active architecture and dashed -->
+<rect x="860" y="752" width="440" height="56" rx="2" fill="#fafafa" stroke="#858b95" stroke-width="2" stroke-dasharray="9 7"/>
+<text x="1080" y="776" class="small" text-anchor="middle">PostgreSQL（今後の導入予定）</text>
+<text x="1080" y="797" class="tiny" text-anchor="middle">レート更新・永続化：未実装</text>
+<line x1="1080" y1="708" x2="1080" y2="747" stroke="#858b95" stroke-dasharray="7 6" stroke-width="2.3" marker-end="url(#arr-dash)"/>
+<text x="64" y="776" class="tiny">実線：実装済みの通信 / 破線：今後の拡張案</text>
+<text x="64" y="805" class="tiny">※ TCP/UDPは各クライアントとGoサーバー間で使用</text>
+</svg>
