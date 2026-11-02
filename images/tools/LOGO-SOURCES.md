@@ -12,3 +12,9 @@
 - 掲載元の表示: Author Microsoft / PD-textlogo。ロゴの商標権は各権利者に帰属します。
 
 取得日: 2026-10-30
+
+## PostgreSQL
+- 掲載元: https://wiki.postgresql.org/wiki/Logo
+- 画像: https://wiki.postgresql.org/images/a/a4/PostgreSQL_logo.3colors.svg
+- PostgreSQL公式Wikiの3色ロゴを変更せず保存。
+- 取得日: 2026-11-01
